@@ -1,0 +1,765 @@
+/* ESTILOS GERAIS E RESET BÁSICO */
+:root {
+    --cor-primaria: #0D2C54; /* Azul Escuro */
+    --cor-acento: #FCA311;  /* Dourado/Amarelo Queimado */
+    --cor-texto-claro: #EDF2F4;
+    --cor-texto-escuro: #1f1f1f;
+    --cor-fundo-claro: #FFFFFF;
+    --cor-cinza-medio: #8D99AE;
+    --fonte-titulo: 'Poppins', sans-serif; /* Mantida para títulos */
+    --fonte-corpo: 'EB Garamond', serif; /* Aplicada para corpo do texto */
+    --cor-erro: #e74c3c; /* Adicionada para consistência, se necessário */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto-escuro);
+    line-height: 1.6;
+    background-color: var(--cor-fundo-claro);
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--cor-primaria);
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; text-align: center; margin-bottom: 40px; }
+h3 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: #333; /* Mantido para parágrafos gerais, EB Garamond será aplicado via body */
+}
+
+a {
+    text-decoration: none;
+    color: var(--cor-acento);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Adicionado para remover espaço extra */
+}
+
+.section {
+    padding: 60px 0;
+}
+
+.section:nth-child(odd) { /* Alterna cor de fundo para algumas seções se desejar */
+    background-color: #f9f9f9;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-family: var(--fonte-titulo);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: var(--cor-acento);
+    color: var(--cor-fundo-claro);
+    border: 2px solid var(--cor-acento);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--cor-acento);
+    border: 2px solid var(--cor-acento);
+}
+
+
+/* CABEÇALHO E NAVEGAÇÃO */
+.header {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo a { /* Estilo do logo no header da single page */
+    font-family: var(--fonte-titulo);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cor-texto-claro);
+}
+
+.header .logo img { /* Caso use imagem no header */
+    max-height: 50px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    padding-left: 0;
+}
+
+.nav-menu li {
+    margin-left: 25px;
+}
+
+.nav-menu a {
+    color: var(--cor-texto-claro);
+    font-weight: 600;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--cor-acento);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--cor-acento);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--cor-texto-claro);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+
+/* SEÇÃO HERO (HOME) */
+.hero-section {
+    background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('../Front-end/img/porsche.png') no-repeat center center/cover; /* Caminho da imagem de fundo do hero */
+    color: var(--cor-texto-claro);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px; /* Para compensar o header fixo */
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    color: var(--cor-texto-claro);
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: var(--cor-texto-claro);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================= */
+/* ESTILOS PARA A SEÇÃO SOBRE NÓS           */
+/* ========================================= */
+
+#sobre-nos {
+    /* O fundo será #f9f9f9 se for a primeira seção ímpar após o hero, ou branco. */
+    /* Se quiser um fundo específico, defina aqui: background-color: var(--cor-fundo-claro); ou #f9f9f9; */
+    padding-top: 80px; 
+    padding-bottom: 80px;
+}
+
+.section-title-container { 
+    text-align: center;
+    margin-bottom: 60px; 
+}
+
+.section-title-container h2 {
+    margin-bottom: 10px; 
+}
+
+.section-subtitle {
+    font-family: var(--fonte-corpo); 
+    font-size: 1.15rem; 
+    color: var(--cor-cinza-medio);
+    font-style: italic;
+    margin-top: -10px; 
+    display: block;
+}
+
+.sobre-nos-content {
+    display: flex;
+    align-items: center;
+    gap: 50px; 
+    flex-wrap: wrap;
+}
+
+.sobre-nos-image-container {
+    flex: 1 1 42%; 
+    min-width: 300px;
+}
+
+.sobre-nos-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px; 
+    box-shadow: 0 8px 25px rgba(13, 44, 84, 0.2); 
+    object-fit: cover; 
+}
+
+.sobre-nos-text-container {
+    flex: 1 1 50%; 
+    min-width: 320px;
+}
+
+.sobre-nos-text-container h3 {
+    font-family: var(--fonte-titulo); 
+    color: var(--cor-primaria);
+    font-size: 2rem; 
+    margin-bottom: 25px;
+    text-align: left; 
+}
+
+.sobre-nos-text-container p {
+    font-family: var(--fonte-corpo); 
+    font-size: 1.1rem; 
+    line-height: 1.85; 
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.sobre-nos-text-container p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* SEÇÃO SERVIÇOS (Estilos para o layout com imagem no topo e tooltip) */
+#servicos {
+    background-color: #f7faff; 
+    /* Se esta for a próxima seção ímpar, o background-color global de .section:nth-child(odd) será aplicado.
+       Se quiser forçar #f7faff, mantenha. Se quiser que siga a regra do nth-child, comente esta linha. */
+    padding: 60px 0;
+}
+
+#servicos h2 { 
+    text-align: center;
+    color: var(--cor-primaria);
+    margin-bottom: 50px;
+}
+
+.servicos-detalhados-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px; 
+}
+
+.servico-detalhado-card {
+    background-color: var(--cor-fundo-claro); 
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.servico-detalhado-card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 10px 25px rgba(13, 44, 84, 0.15); 
+}
+
+.servico-detalhado-image {
+    width: 100%;
+    height: 220px; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; 
+    position: relative; /* Necessário para o tooltip */
+    cursor: default;   /* Ou 'help' */
+}
+
+.servico-detalhado-image img {
+    max-width: 100%;  
+    max-height: 100%; 
+    object-fit: contain; 
+    display: block; 
+}
+
+/* Estilo do Tooltip para Serviços */
+.servico-detalhado-image[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 105%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    font-family: var(--fonte-corpo);
+    line-height: 1.4;
+    white-space: normal;
+    width: max-content;
+    max-width: 250px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.servico-detalhado-image[data-tooltip]::before { /* Setinha do tooltip */
+    content: '';
+    position: absolute;
+    bottom: 105%; 
+    margin-bottom: -5px; 
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--cor-primaria) transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 99;
+    pointer-events: none;
+}
+
+.servico-detalhado-image[data-tooltip]:hover::after,
+.servico-detalhado-image[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.servico-detalhado-content {
+    padding: 20px 25px; 
+    text-align: center; 
+    flex-grow: 1; 
+}
+
+.servico-detalhado-content h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.4rem; 
+    color: var(--cor-primaria);
+    margin-top: 0;
+    margin-bottom: 10px; 
+}
+
+/* Removido .servico-detalhado-content p pois a descrição está no tooltip */
+
+
+/* SEÇÃO DESTAQUES COMPACTOS (Se for usar) */
+#destaques-compactos {
+    background-color: var(--cor-fundo-claro); 
+    padding: 60px 0;
+}
+
+#destaques-compactos h2.text-center { 
+    text-align: center;
+    margin-bottom: 50px; 
+    color: var(--cor-primaria);
+}
+
+.compact-items-wrapper {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 30px; 
+    justify-content: center; 
+}
+
+.compact-item {
+    display: flex;
+    align-items: flex-start; 
+    background-color: #FFFFFF; 
+    border-radius: 8px;
+    padding: 20px;
+    flex-basis: calc(33.333% - 21px); 
+    min-width: 280px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.compact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
+}
+
+.compact-item-image {
+    flex-shrink: 0; 
+    width: 80px;  
+    height: 80px; 
+    margin-right: 20px;
+    overflow: hidden; 
+    border-radius: 6px; 
+}
+
+.compact-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+.compact-item-text h4 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.15rem; 
+    color: var(--cor-primaria);
+    margin-top: 0; 
+    margin-bottom: 8px;
+}
+
+.compact-item-text p {
+    font-size: 0.9rem; 
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 0; 
+}
+
+
+/* SEÇÃO CONTATO */
+.section-contato {
+    background-color: var(--cor-primaria) !important; /* Azul Escuro - Adicionado !important para garantir prioridade sobre .section:nth-child(odd) se necessário */
+    color: var(--cor-texto-claro); /* Define a cor padrão do texto para esta seção */
+    padding: 60px 0; /* Adicionando padding que pode estar faltando na definição da classe */
+}
+
+.section-contato h2 {
+    color: var(--cor-texto-claro); /* Título principal da seção (Entre em Contato) */
+    text-align: center;
+    margin-bottom: 50px; /* Adicionado para consistência */
+}
+
+.contato-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.contato-info, .contato-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contato-info h3 { /* "Fale Conosco" */
+    color: var(--cor-acento); /* Dourado/Amarelo Queimado - OK */
+    margin-bottom: 20px;
+    font-size: 1.8rem; /* Aumentando um pouco para destaque */
+}
+
+.contato-info p {
+    margin-bottom: 15px;
+    color: var(--cor-texto-claro); /* Garante que o texto de informação seja claro */
+    display: flex;
+    align-items: center;
+    font-size: 1rem; /* Ajuste para melhor leitura */
+}
+
+.contato-info p i { /* Ícones de localização, telefone, email */
+    color: var(--cor-acento); /* Dourado/Amarelo Queimado - OK */
+    margin-right: 12px; /* Leve ajuste na margem */
+    width: 20px; 
+    font-size: 1.1rem; /* Leve ajuste no tamanho do ícone */
+}
+
+.social-icons { /* Container dos ícones sociais */
+    margin-top: 20px; /* Espaço acima dos ícones sociais */
+}
+
+.social-icons a {
+    color: var(--cor-texto-claro); /* Garante que os ícones sociais sejam claros */
+    font-size: 1.6rem; /* Aumentando um pouco os ícones sociais */
+    margin-right: 18px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--cor-acento);
+}
+
+/* Formulário de Contato dentro da seção escura */
+.section-contato .form-group { /* Adicionado .section-contato para especificidade */
+    margin-bottom: 20px;
+}
+
+.section-contato .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--cor-texto-claro); /* Garante que as labels do formulário sejam claras */
+    font-size: 0.95rem;
+}
+
+.section-contato .form-group input,
+.section-contato .form-group textarea {
+    width: 100%;
+    padding: 12px 15px; /* Aumentando padding interno */
+    border: 1px solid var(--cor-cinza-medio); 
+    border-radius: 5px;
+    background-color: #EDF2F4; /* Fundo claro para os campos de input - OK */
+    color: var(--cor-texto-escuro); /* Texto DENTRO do input escuro - OK */
+    font-family: var(--fonte-corpo);
+    font-size: 1rem;
+}
+
+.section-contato .form-group input:focus,
+.section-contato .form-group textarea:focus {
+    outline: none;
+    border-color: var(--cor-acento);
+    box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.25); /* Sombra de foco com cor de acento */
+}
+
+/* Botão de Enviar Mensagem no formulário de contato */
+.section-contato .btn-primary { /* Estilizando o botão primário especificamente neste contexto */
+    background-color: var(--cor-acento);
+    color: var(--cor-primaria); /* Texto escuro no botão de acento para bom contraste */
+    border: 2px solid var(--cor-acento);
+    font-weight: 600; /* Deixando o texto do botão mais forte */
+}
+
+.section-contato .btn-primary:hover {
+    background-color: var(--cor-texto-claro); /* Fundo claro no hover */
+    color: var(--cor-acento); /* Texto com cor de acento */
+    border: 2px solid var(--cor-acento);
+}
+
+
+/* RODAPÉ */
+.footer {
+    background-color: #081c33; 
+    color: var(--cor-cinza-medio);
+    text-align: center;
+    padding: 30px 0;
+}
+
+.footer p {
+    margin-bottom: 5px;
+    color: var(--cor-cinza-medio);
+}
+
+.footer .fa-heart {
+    color: var(--cor-acento);
+}
+
+
+/* BOTÃO WHATSAPP FLUTUANTE */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25D366; 
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #1DA851; 
+}
+
+
+/* RESPONSIVIDADE GERAL */
+@media (max-width: 992px) {
+    .hero-content h1 { font-size: 2.8rem; }
+    .hero-content p { font-size: 1.1rem; }
+
+    /* Seção Sobre Nós em Tablet */
+    .sobre-nos-content {
+        gap: 30px;
+    }
+    .sobre-nos-text-container h3 {
+        font-size: 1.8rem;
+    }
+    .sobre-nos-text-container p {
+        font-size: 1rem;
+    }
+    
+    /* Seção Destaques Compactos em Tablet */
+    .compact-item {
+        flex-basis: calc(50% - 16px); 
+        min-width: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-menu {
+        width: 100%;
+        max-height: 0; 
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+    }
+
+    .nav-menu.active { 
+        max-height: 300px; 
+        padding-top: 10px; 
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-menu li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .nav-menu a {
+        display: block; 
+        padding: 10px;
+    }
+    .nav-menu a::after {
+        bottom: 5px; 
+    }
+
+    .menu-toggle {
+        display: block; 
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .hero-section {
+        padding-top: 120px; 
+    }
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1rem; }
+
+    h1 { font-size: 2.2rem; } /* Ajustes gerais de H para mobile */
+    h2 { font-size: 1.8rem; }
+
+    /* Seção Sobre Nós em Mobile */
+    #sobre-nos {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    .section-title-container { /* Para Sobre Nós */
+        margin-bottom: 40px;
+    }
+    .sobre-nos-content {
+        flex-direction: column;
+        text-align: left; 
+    }
+    .sobre-nos-image-container {
+        margin-bottom: 30px;
+        max-width: 500px;
+        width: 100%;
+    }
+    .sobre-nos-text-container h3 { /* Para Sobre Nós */
+        text-align: center;
+        font-size: 1.7rem;
+    }
+
+    /* Seção Contato em Mobile */
+    .contato-wrapper {
+        flex-direction: column;
+    }
+
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Grid de serviços detalhados em mobile */
+    .servicos-detalhados-grid {
+        gap: 20px; 
+    }
+    .servico-detalhado-image { 
+        height: 180px; 
+    }
+
+    /* Itens compactos em mobile */
+    .compact-item {
+        flex-basis: 100%; 
+        min-width: unset; 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+    }
+    .compact-item-image {
+        width: 100px; 
+        height: 100px;
+        margin-right: 0; 
+        margin-bottom: 15px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 { font-size: 2rem; }
+    .btn { padding: 10px 20px; font-size: 0.9rem;}
+
+    /* O .servicos-detalhados-grid já está coberto pelo auto-fit para 1 coluna */
+    /* Se havia .servicos-grid para outro layout, ele está comentado. */
+
+    .header .logo a { /* Logo no header da single page em mobile pequeno */
+        font-size: 1.5rem;
+    }
+    .header .container { 
+        padding-bottom: 10px;
+    }
+    .menu-toggle {
+        top: 15px; 
+    }
+}

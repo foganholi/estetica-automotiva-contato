@@ -1,0 +1,201 @@
+/* ESTILOS GERAIS E RESET BÁSICO - CADASTRO */
+:root {
+    --cor-primaria: #0D2C54; /* Azul Escuro */
+    --cor-acento: #FCA311;  /* Dourado/Amarelo Queimado */
+    --cor-texto-claro: #EDF2F4;
+    --cor-texto-escuro: #1f1f1f;
+    --cor-fundo-pagina: #f0f2f5; /* Um cinza muito claro para o fundo da página */
+    --cor-fundo-form: #FFFFFF;
+    --cor-cinza-medio: #8D99AE;
+    --cor-erro: #e74c3c;
+    --fonte-titulo: 'Poppins', sans-serif;
+    --fonte-corpo: 'Lato', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo-pagina);
+    color: var(--cor-texto-escuro);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* CABEÇALHO COM LOGO */
+.auth-header {
+    background-color: var(--cor-primaria);
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.auth-header .logo a {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-texto-claro);
+    font-size: 2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.auth-header .logo img {
+    max-height: 50px; /* Ajuste conforme o tamanho da sua logo */
+    vertical-align: middle;
+}
+
+
+/* CONTAINER PRINCIPAL DO FORMULÁRIO */
+.auth-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.auth-form-wrapper {
+    background-color: var(--cor-fundo-form);
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.auth-form-wrapper h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-primaria);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+/* GRUPOS DE FORMULÁRIO E INPUTS */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--cor-primaria);
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-family: var(--fonte-corpo);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: var(--cor-acento);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.2);
+}
+
+/* MENSAGENS DE ERRO (PARA JAVASCRIPT) */
+.error-message {
+    color: var(--cor-erro);
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none; /* Oculto por padrão */
+}
+
+/* BOTÃO DE SUBMISSÃO */
+.btn-submit-auth {
+    background-color: var(--cor-acento);
+    color: var(--cor-primaria);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: var(--fonte-titulo);
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit-auth:hover {
+    background-color: #e0900f;
+    transform: translateY(-2px);
+}
+
+.btn-submit-auth:active {
+    transform: translateY(0);
+}
+
+/* LINKS DO FORMULÁRIO */
+.form-link {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.form-link a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-link a:hover {
+    color: var(--cor-acento);
+    text-decoration: underline;
+}
+
+/* RODAPÉ */
+.auth-footer {
+    background-color: #081c33;
+    color: var(--cor-cinza-medio);
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 0.9rem;
+}
+
+.auth-footer p {
+    margin: 5px 0;
+}
+
+.auth-footer a {
+    color: var(--cor-acento);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 480px) {
+    .auth-form-wrapper {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+
+    .auth-form-wrapper h2 {
+        font-size: 1.6rem;
+    }
+
+    .auth-header .logo a {
+        font-size: 1.6rem;
+    }
+}
