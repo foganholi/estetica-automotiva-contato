@@ -2,8 +2,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email'); // Mantido para clareza, se usado
+    const senhaInput = document.getElementById('senha'); // Mantido para clareza, se usado
 
-    // Função para mostrar erro (mantenha como estava)
+    // ... (suas funções showError e clearError como antes) ...
     function showError(fieldId, message) {
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
@@ -16,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Função para limpar erro (mantenha como estava)
     function clearError(fieldId) {
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
@@ -25,27 +26,27 @@ document.addEventListener('DOMContentLoaded', function() {
             errorElement.style.display = 'none';
         }
         if (inputElement) {
-            inputElement.style.borderColor = '#ccc'; // Cor padrão da borda
+            inputElement.style.borderColor = '#ccc'; 
         }
     }
 
+
     if (loginForm) {
+        // ... (seu código de validação do loginForm existente) ...
         loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Sempre previna o envio padrão inicialmente
+            event.preventDefault(); 
             let isValid = true;
 
             clearError('email');
             clearError('senha');
 
-            const emailInput = document.getElementById('email');
-            const senhaInput = document.getElementById('senha');
-            const email = emailInput.value.trim();
-            const senha = senhaInput.value.trim();
+            const email = emailInput.value.trim(); // Usando as vars já definidas
+            const senha = senhaInput.value.trim(); // Usando as vars já definidas
 
             if (email === '') {
                 showError('email', 'Por favor, informe seu email.');
                 isValid = false;
-            } else if (!/\S+@\S+\.\S+/.test(email)) {
+            } else if (!/\S+@\S+\.\S+/.test(email)) { 
                 showError('email', 'Por favor, insira um email válido.');
                 isValid = false;
             }
@@ -54,14 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showError('senha', 'Por favor, informe sua senha.');
                 isValid = false;
             }
-
-            // Se a validação do frontend passar, redirecionamos para a index.html
-            // Em um cenário real, aqui você enviaria os dados para o backend
-            // e o backend faria o redirecionamento após autenticação bem-sucedida.
+            
             if (isValid) {
-                // Simulação de login bem-sucedido
-                alert('Login "simulado" com sucesso! Redirecionando...'); // Opcional: para feedback
-                window.location.href = '../index.html'; // Redireciona para a página principal
+                alert('Login "simulado" com sucesso! Redirecionando...'); 
+                window.location.href = '../index.html'; 
             }
         });
 
@@ -72,4 +69,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Funcionalidade de mostrar/ocultar senha
+    const togglePasswordIcons = document.querySelectorAll('.toggle-password-visibility');
+    togglePasswordIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            const targetInputId = this.getAttribute('data-target');
+            const targetInput = document.getElementById(targetInputId);
+
+            if (targetInput) {
+                if (targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    targetInput.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            }
+        });
+    });
 });

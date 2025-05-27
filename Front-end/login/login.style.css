@@ -272,3 +272,35 @@ body {
         font-size: 1rem;
     }
 }
+
+/* Adicione ao final de login.style.css e cadastro.style.css */
+
+/* Container para o input de senha e o ícone */
+.password-input-container {
+    position: relative;
+    display: flex; /* Ajuda no alinhamento vertical do ícone se não posicionado absolutamente */
+    align-items: center;
+}
+
+/* Ajusta o input para dar espaço ao ícone */
+.password-input-container input[type="password"],
+.password-input-container input[type="text"] { /* Estiliza também quando o tipo muda para texto */
+    /* Herda a maioria dos estilos de .form-group input[...] */
+    padding-right: 40px !important; /* Adiciona espaço à direita para o ícone. !important pode ser necessário para sobrescrever padding específico. */
+}
+
+/* Estilo do ícone de olho */
+.toggle-password-visibility {
+    position: absolute;
+    right: 15px; /* Distância da borda direita do input */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--cor-cinza-medio); /* Cor inicial do ícone */
+    font-size: 1rem; /* Tamanho do ícone */
+    z-index: 2; /* Para garantir que fique sobre o input se houver sobreposição */
+}
+
+.toggle-password-visibility:hover {
+    color: var(--cor-acento); /* Cor ao passar o mouse */
+}

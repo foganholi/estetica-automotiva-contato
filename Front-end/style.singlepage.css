@@ -45,7 +45,7 @@ h3 { font-size: 1.5rem; }
 
 p {
     margin-bottom: 1rem;
-    color: #333; /* Mantido para parágrafos gerais, EB Garamond será aplicado via body */
+    color: #333;
 }
 
 a {
@@ -56,14 +56,14 @@ a {
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Adicionado para remover espaço extra */
+    display: block;
 }
 
 .section {
     padding: 60px 0;
 }
 
-.section:nth-child(odd) { /* Alterna cor de fundo para algumas seções se desejar */
+.section:nth-child(odd) {
     background-color: #f9f9f9;
 }
 
@@ -110,14 +110,14 @@ img {
     align-items: center;
 }
 
-.header .logo a { /* Estilo do logo no header da single page */
+.header .logo a { 
     font-family: var(--fonte-titulo);
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--cor-texto-claro);
 }
 
-.header .logo img { /* Caso use imagem no header */
+.header .logo img { 
     max-height: 50px;
 }
 
@@ -172,14 +172,14 @@ img {
 
 /* SEÇÃO HERO (HOME) */
 .hero-section {
-    background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('../Front-end/img/porsche.png') no-repeat center center/cover; /* Caminho da imagem de fundo do hero */
+    background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('../Front-end/img/porsche.png') no-repeat center center/cover; /* Verifique este caminho se style.css está na raiz do Front-end */
     color: var(--cor-texto-claro);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding-top: 80px; /* Para compensar o header fixo */
+    padding-top: 80px;
 }
 
 .hero-content h1 {
@@ -202,27 +202,26 @@ img {
 /* ========================================= */
 
 #sobre-nos {
-    /* O fundo será #f9f9f9 se for a primeira seção ímpar após o hero, ou branco. */
-    /* Se quiser um fundo específico, defina aqui: background-color: var(--cor-fundo-claro); ou #f9f9f9; */
-    padding-top: 80px; 
+    padding-top: 80px;
     padding-bottom: 80px;
+    /* background-color: #f9f9f9; /* Será aplicado se for uma seção ímpar globalmente */
 }
 
-.section-title-container { 
+.section-title-container {
     text-align: center;
-    margin-bottom: 60px; 
+    margin-bottom: 60px;
 }
 
 .section-title-container h2 {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 .section-subtitle {
-    font-family: var(--fonte-corpo); 
-    font-size: 1.15rem; 
+    font-family: var(--fonte-corpo);
+    font-size: 1.15rem;
     color: var(--cor-cinza-medio);
     font-style: italic;
-    margin-top: -10px; 
+    margin-top: -10px;
     display: block;
 }
 
@@ -271,26 +270,104 @@ img {
     margin-bottom: 0;
 }
 
+/* ========================================= */
+/* NOVA SEÇÃO: POR QUE ME ESCOLHER           */
+/* ========================================= */
+#por-que-me-escolher {
+    padding: 50px 0; /* Padding original do snippet */
+    /* background-color: #f9f9f9; /* Será aplicado se for uma seção ímpar globalmente, ou defina aqui se necessário */
+}
+
+#por-que-me-escolher h2 { /* Este h2 é filho de .section, herdará text-align:center e margin-bottom:40px do global H2 */
+    font-size: 2.25rem; /* Equivalente a 36px */
+    color: var(--cor-primaria); /* Usando cor primária do site */
+    /* text-align: center; e margin-bottom: 40px; já são aplicados pela regra global de h2 */
+}
+
+.estetica-wrapper { /* Renomeado de .features-wrapper para algo mais específico ou genérico se preferir */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* space-between pode deixar itens da última linha desalinhados se não preencher */
+    gap: 25px; /* Gap entre os cards */
+    text-align: center; /* Para centralizar conteúdo dos cards se eles não tiverem display:flex e align-items:center */
+}
+
+.estetica-info { /* Renomeado de .feature-item */
+    flex-basis: calc(30% - 20px); /* Para aproximadamente 3 colunas, ajuste o cálculo do gap se mudar o gap acima */
+    min-width: 270px; /* Largura mínima para responsividade */
+    background-color: var(--cor-fundo-claro); /* Fundo branco padrão */
+    border-radius: 8px;
+    padding: 25px 20px; /* Padding aumentado um pouco */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra sutil */
+    display: flex; /* Para alinhar ícone, título e texto verticalmente */
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.estetica-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+
+.estetica-info i { /* Ícone */
+    font-size: 2rem; /* Equivalente a 24px, mas em rem para escalabilidade */
+    color: var(--cor-acento); /* Usando cor de acento do site */
+    margin-bottom: 15px; /* Aumentado um pouco */
+}
+
+.estetica-info h3 { /* Título dentro do card */
+    font-size: 1.375rem; /* Equivalente a 22px */
+    color: var(--cor-primaria); /* Usando cor primária para o subtítulo do card */
+    margin-bottom: 10px; /* Reduzido um pouco */
+    font-family: var(--fonte-titulo); /* Garante a fonte do título */
+}
+
+.estetica-info p {
+    font-size: 1rem; /* Equivalente a 16px */
+    color: #555;    /* Um cinza escuro para o texto, bom contraste em fundo branco */
+    line-height: 1.6;
+    font-family: var(--fonte-corpo); /* Garante a fonte do corpo */
+    flex-grow: 1; /* Para que os parágrafos ocupem espaço e alinhem botões (se houver) */
+}
+
+#por-que-me-escolher .pqme-button-container {
+    text-align: center; /* Centraliza o botão horizontalmente */
+    margin-top: 50px;   /* Move o botão para baixo. Ajuste este valor conforme necessário (ex: 40px, 60px) */
+    margin-bottom: 10px; /* Adiciona um pequeno respiro abaixo do botão, antes da próxima seção */
+}
+
+
 
 /* SEÇÃO SERVIÇOS (Estilos para o layout com imagem no topo e tooltip) */
 #servicos {
-    background-color: #f7faff; 
-    /* Se esta for a próxima seção ímpar, o background-color global de .section:nth-child(odd) será aplicado.
-       Se quiser forçar #f7faff, mantenha. Se quiser que siga a regra do nth-child, comente esta linha. */
-    padding: 60px 0;
+    background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('../Front-end/img/Garage\ Lounge\ Area.jpg') no-repeat center center/cover; /* Verifique este caminho se style.css está na raiz do Front-end */
+    color: var(--cor-texto-claro);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 80px;
 }
 
-#servicos h2 { 
-    text-align: center;
-    color: var(--cor-primaria);
-    margin-bottom: 50px;
+#servicos h2 {
+    font-size: 3.5rem;
+    color: var(--cor-texto-claro);
+    margin-bottom: 1rem;
 }
+
+/* Os estilos para .servicos-detalhados-grid e .servico-detalhado-card permanecem os mesmos.
+   Eles já têm fundos claros e sombras, o que os fará destacar sobre o novo fundo da seção. */
 
 .servicos-detalhados-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 30px; 
+    gap: 30px;
+    position: relative; /* Garante que os cards fiquem acima da imagem/overlay da seção */
+    z-index: 1;
 }
+
 
 .servico-detalhado-card {
     background-color: var(--cor-fundo-claro); 
@@ -309,27 +386,26 @@ img {
 
 .servico-detalhado-image {
     width: 100%;
-    height: 220px; 
-    display: flex; 
+    height: 220px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa; 
-    position: relative; /* Necessário para o tooltip */
-    cursor: default;   /* Ou 'help' */
+    background-color: #f8f9fa;
+    position: relative;
+    cursor: default;
 }
 
 .servico-detalhado-image img {
-    max-width: 100%;  
-    max-height: 100%; 
-    object-fit: contain; 
-    display: block; 
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
-/* Estilo do Tooltip para Serviços */
 .servico-detalhado-image[data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 105%; 
+    bottom: 105%;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--cor-primaria);
@@ -350,11 +426,11 @@ img {
     pointer-events: none;
 }
 
-.servico-detalhado-image[data-tooltip]::before { /* Setinha do tooltip */
+.servico-detalhado-image[data-tooltip]::before {
     content: '';
     position: absolute;
-    bottom: 105%; 
-    margin-bottom: -5px; 
+    bottom: 105%;
+    margin-bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
     border-width: 5px;
@@ -374,101 +450,99 @@ img {
 }
 
 .servico-detalhado-content {
-    padding: 20px 25px; 
-    text-align: center; 
-    flex-grow: 1; 
+    padding: 20px 25px;
+    text-align: center;
+    flex-grow: 1;
 }
 
 .servico-detalhado-content h3 {
     font-family: var(--fonte-titulo);
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
     color: var(--cor-primaria);
     margin-top: 0;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
-
-/* Removido .servico-detalhado-content p pois a descrição está no tooltip */
 
 
 /* SEÇÃO DESTAQUES COMPACTOS (Se for usar) */
 #destaques-compactos {
-    background-color: var(--cor-fundo-claro); 
+    background-color: var(--cor-fundo-claro);
     padding: 60px 0;
 }
 
-#destaques-compactos h2.text-center { 
+#destaques-compactos h2.text-center {
     text-align: center;
-    margin-bottom: 50px; 
+    margin-bottom: 50px;
     color: var(--cor-primaria);
 }
 
 .compact-items-wrapper {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 30px; 
-    justify-content: center; 
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
 }
 
 .compact-item {
     display: flex;
-    align-items: flex-start; 
-    background-color: #FFFFFF; 
+    align-items: flex-start;
+    background-color: #FFFFFF;
     border-radius: 8px;
     padding: 20px;
-    flex-basis: calc(33.333% - 21px); 
-    min-width: 280px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    flex-basis: calc(33.333% - 21px);
+    min-width: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .compact-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
 .compact-item-image {
-    flex-shrink: 0; 
-    width: 80px;  
-    height: 80px; 
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
     margin-right: 20px;
-    overflow: hidden; 
-    border-radius: 6px; 
+    overflow: hidden;
+    border-radius: 6px;
 }
 
 .compact-item-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     display: block;
 }
 
 .compact-item-text h4 {
     font-family: var(--fonte-titulo);
-    font-size: 1.15rem; 
+    font-size: 1.15rem;
     color: var(--cor-primaria);
-    margin-top: 0; 
+    margin-top: 0;
     margin-bottom: 8px;
 }
 
 .compact-item-text p {
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
     color: #555;
     line-height: 1.5;
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 
 
 /* SEÇÃO CONTATO */
 .section-contato {
-    background-color: var(--cor-primaria) !important; /* Azul Escuro - Adicionado !important para garantir prioridade sobre .section:nth-child(odd) se necessário */
-    color: var(--cor-texto-claro); /* Define a cor padrão do texto para esta seção */
-    padding: 60px 0; /* Adicionando padding que pode estar faltando na definição da classe */
+    background-color: var(--cor-primaria) !important;
+    color: var(--cor-texto-claro);
+    padding: 60px 0;
 }
 
 .section-contato h2 {
-    color: var(--cor-texto-claro); /* Título principal da seção (Entre em Contato) */
+    color: var(--cor-texto-claro);
     text-align: center;
-    margin-bottom: 50px; /* Adicionado para consistência */
+    margin-bottom: 50px;
 }
 
 .contato-wrapper {
@@ -483,34 +557,34 @@ img {
     min-width: 300px;
 }
 
-.contato-info h3 { /* "Fale Conosco" */
-    color: var(--cor-acento); /* Dourado/Amarelo Queimado - OK */
+.contato-info h3 {
+    color: var(--cor-acento);
     margin-bottom: 20px;
-    font-size: 1.8rem; /* Aumentando um pouco para destaque */
+    font-size: 1.8rem;
 }
 
 .contato-info p {
     margin-bottom: 15px;
-    color: var(--cor-texto-claro); /* Garante que o texto de informação seja claro */
+    color: var(--cor-texto-claro);
     display: flex;
     align-items: center;
-    font-size: 1rem; /* Ajuste para melhor leitura */
+    font-size: 1rem;
 }
 
-.contato-info p i { /* Ícones de localização, telefone, email */
-    color: var(--cor-acento); /* Dourado/Amarelo Queimado - OK */
-    margin-right: 12px; /* Leve ajuste na margem */
-    width: 20px; 
-    font-size: 1.1rem; /* Leve ajuste no tamanho do ícone */
+.contato-info p i {
+    color: var(--cor-acento);
+    margin-right: 12px;
+    width: 20px;
+    font-size: 1.1rem;
 }
 
-.social-icons { /* Container dos ícones sociais */
-    margin-top: 20px; /* Espaço acima dos ícones sociais */
+.social-icons {
+    margin-top: 20px;
 }
 
 .social-icons a {
-    color: var(--cor-texto-claro); /* Garante que os ícones sociais sejam claros */
-    font-size: 1.6rem; /* Aumentando um pouco os ícones sociais */
+    color: var(--cor-texto-claro);
+    font-size: 1.6rem;
     margin-right: 18px;
     transition: color 0.3s ease;
 }
@@ -519,27 +593,22 @@ img {
     color: var(--cor-acento);
 }
 
-/* Formulário de Contato dentro da seção escura */
-.section-contato .form-group { /* Adicionado .section-contato para especificidade */
-    margin-bottom: 20px;
-}
-
 .section-contato .form-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
-    color: var(--cor-texto-claro); /* Garante que as labels do formulário sejam claras */
+    color: var(--cor-texto-claro);
     font-size: 0.95rem;
 }
 
 .section-contato .form-group input,
 .section-contato .form-group textarea {
     width: 100%;
-    padding: 12px 15px; /* Aumentando padding interno */
-    border: 1px solid var(--cor-cinza-medio); 
+    padding: 12px 15px;
+    border: 1px solid var(--cor-cinza-medio);
     border-radius: 5px;
-    background-color: #EDF2F4; /* Fundo claro para os campos de input - OK */
-    color: var(--cor-texto-escuro); /* Texto DENTRO do input escuro - OK */
+    background-color: #EDF2F4;
+    color: var(--cor-texto-escuro);
     font-family: var(--fonte-corpo);
     font-size: 1rem;
 }
@@ -548,27 +617,26 @@ img {
 .section-contato .form-group textarea:focus {
     outline: none;
     border-color: var(--cor-acento);
-    box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.25); /* Sombra de foco com cor de acento */
+    box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.25);
 }
 
-/* Botão de Enviar Mensagem no formulário de contato */
-.section-contato .btn-primary { /* Estilizando o botão primário especificamente neste contexto */
+.section-contato .btn-primary {
     background-color: var(--cor-acento);
-    color: var(--cor-primaria); /* Texto escuro no botão de acento para bom contraste */
+    color: var(--cor-primaria);
     border: 2px solid var(--cor-acento);
-    font-weight: 600; /* Deixando o texto do botão mais forte */
+    font-weight: 600;
 }
 
 .section-contato .btn-primary:hover {
-    background-color: var(--cor-texto-claro); /* Fundo claro no hover */
-    color: var(--cor-acento); /* Texto com cor de acento */
+    background-color: var(--cor-texto-claro);
+    color: var(--cor-acento);
     border: 2px solid var(--cor-acento);
 }
 
 
 /* RODAPÉ */
 .footer {
-    background-color: #081c33; 
+    background-color: #081c33;
     color: var(--cor-cinza-medio);
     text-align: center;
     padding: 30px 0;
@@ -631,6 +699,11 @@ img {
         flex-basis: calc(50% - 16px); 
         min-width: 260px;
     }
+    /* Nova Seção: Por que me escolher em Tablet */
+    .estetica-info {
+        flex-basis: calc(48% - 15px); /* Ajuste para 2 colunas em tablet */
+        min-width: 260px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -682,7 +755,7 @@ img {
     .hero-content h1 { font-size: 2.5rem; }
     .hero-content p { font-size: 1rem; }
 
-    h1 { font-size: 2.2rem; } /* Ajustes gerais de H para mobile */
+    h1 { font-size: 2.2rem; } 
     h2 { font-size: 1.8rem; }
 
     /* Seção Sobre Nós em Mobile */
@@ -690,7 +763,7 @@ img {
         padding-top: 60px;
         padding-bottom: 60px;
     }
-    .section-title-container { /* Para Sobre Nós */
+    .section-title-container { 
         margin-bottom: 40px;
     }
     .sobre-nos-content {
@@ -702,14 +775,14 @@ img {
         max-width: 500px;
         width: 100%;
     }
-    .sobre-nos-text-container h3 { /* Para Sobre Nós */
+    .sobre-nos-text-container h3 { 
         text-align: center;
         font-size: 1.7rem;
     }
 
     /* Seção Contato em Mobile */
     .contato-wrapper {
-        flex-direction: column;
+        flex-direction: column; 
     }
 
     .whatsapp-float {
@@ -744,16 +817,27 @@ img {
         margin-right: 0; 
         margin-bottom: 15px; 
     }
+     /* Nova Seção: Por que me escolher em Mobile */
+    .estetica-info {
+        flex-basis: 100%; /* Uma coluna em mobile */
+        min-width: unset;
+    }
+    #por-que-me-escolher h2 {
+        font-size: 1.8rem; /* Ajusta tamanho do título da seção para mobile */
+    }
+    .estetica-info h3 {
+        font-size: 1.25rem; /* Ajusta tamanho do título do card para mobile */
+    }
+    .estetica-info p {
+        font-size: 0.95rem; /* Ajusta tamanho do texto do card para mobile */
+    }
 }
 
 @media (max-width: 480px) {
     .hero-content h1 { font-size: 2rem; }
     .btn { padding: 10px 20px; font-size: 0.9rem;}
 
-    /* O .servicos-detalhados-grid já está coberto pelo auto-fit para 1 coluna */
-    /* Se havia .servicos-grid para outro layout, ele está comentado. */
-
-    .header .logo a { /* Logo no header da single page em mobile pequeno */
+    .header .logo a { 
         font-size: 1.5rem;
     }
     .header .container { 

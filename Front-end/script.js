@@ -57,3 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
     onScroll();
 
 });
+
+document.getElementById('form-contato').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Coletar os dados do formulário
+    const nome = document.getElementById('nome-contato').value;
+    const email = document.getElementById('email-contato').value;
+    const assunto = document.getElementById('assunto-contato').value;
+    const mensagem = document.getElementById('mensagem-contato').value;
+    
+    // Criar a URL do WhatsApp com os dados
+    const whatsappNumber = '559999999999'; // Substitua com seu número do WhatsApp
+    const message = `*Nome:* ${nome}%0A*Email:* ${email}%0A*Assunto:* ${assunto}%0A*Mensagem:* ${mensagem}`;
+    const whatsappURL = `https://wa.me/${11949496463}?text=${message}`;
+    
+    // Redirecionar para o WhatsApp
+    window.open(whatsappURL, '_blank');
+});

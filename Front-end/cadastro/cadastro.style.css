@@ -45,7 +45,7 @@ body {
 }
 
 .auth-header .logo img {
-    max-height: 50px; /* Ajuste conforme o tamanho da sua logo */
+    max-height: 100px; /* Ajuste conforme o tamanho da sua logo */
     vertical-align: middle;
 }
 
@@ -89,9 +89,11 @@ body {
     font-size: 0.9rem;
 }
 
+/* MODIFICADO AQUI: Adicionado input[type="date"] */
 .form-group input[type="text"],
 .form-group input[type="email"],
-.form-group input[type="password"] {
+.form-group input[type="password"],
+.form-group input[type="date"] {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #ccc;
@@ -99,12 +101,38 @@ body {
     box-sizing: border-box;
     font-size: 1rem;
     font-family: var(--fonte-corpo);
+    color: var(--cor-texto-escuro); /* Garante que o texto dentro do input seja escuro */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none; /* Ajuda a normalizar a aparência em alguns navegadores, opcional */
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
+/* Ajuste para o placeholder do input de data, se necessário, e para o ícone do calendário */
+.form-group input[type="date"] {
+    position: relative; /* Para um possível posicionamento customizado do ícone, se desejado */
+    line-height: normal; /* Alguns navegadores podem precisar disso para alinhar o texto da data */
+}
+
+/* Alguns navegadores podem ter dificuldade em estilizar o placeholder de input[type="date"] */
+.form-group input[type="date"]::placeholder { /* Estilo do placeholder, se aplicável */
+    color: var(--cor-cinza-medio);
+}
+
+/* Estilo para quando o input de data não está preenchido (alguns navegadores mostram o formato como placeholder) */
+.form-group input[type="date"]:invalid {
+    color: var(--cor-cinza-medio); /* Ou a cor que você quer para o 'dd/mm/aaaa' antes de selecionar */
+}
+.form-group input[type="date"]:valid {
+    color: var(--cor-texto-escuro); /* Cor do texto quando uma data válida é selecionada */
+}
+
+
+/* MODIFICADO AQUI: Adicionado input[type="date"]:focus */
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus {
+.form-group input[type="password"]:focus,
+.form-group input[type="date"]:focus {
     border-color: var(--cor-acento);
     outline: none;
     box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.2);
@@ -198,4 +226,36 @@ body {
     .auth-header .logo a {
         font-size: 1.6rem;
     }
+}
+
+/* Adicione ao final de login.style.css e cadastro.style.css */
+
+/* Container para o input de senha e o ícone */
+.password-input-container {
+    position: relative;
+    display: flex; /* Ajuda no alinhamento vertical do ícone se não posicionado absolutamente */
+    align-items: center;
+}
+
+/* Ajusta o input para dar espaço ao ícone */
+.password-input-container input[type="password"],
+.password-input-container input[type="text"] { /* Estiliza também quando o tipo muda para texto */
+    /* Herda a maioria dos estilos de .form-group input[...] */
+    padding-right: 40px !important; /* Adiciona espaço à direita para o ícone. !important pode ser necessário para sobrescrever padding específico. */
+}
+
+/* Estilo do ícone de olho */
+.toggle-password-visibility {
+    position: absolute;
+    right: 15px; /* Distância da borda direita do input */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--cor-cinza-medio); /* Cor inicial do ícone */
+    font-size: 1rem; /* Tamanho do ícone */
+    z-index: 2; /* Para garantir que fique sobre o input se houver sobreposição */
+}
+
+.toggle-password-visibility:hover {
+    color: var(--cor-acento); /* Cor ao passar o mouse */
 }

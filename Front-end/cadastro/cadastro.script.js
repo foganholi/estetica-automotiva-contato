@@ -2,50 +2,57 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const cadastroForm = document.getElementById('cadastroForm');
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+    const dataNascimentoInput = document.getElementById('dataNascimento');
+    const cpfInput = document.getElementById('cpf');
+    const senhaInput = document.getElementById('senha');
+    const confirmarSenhaInput = document.getElementById('confirmarSenha');
 
-    // Função para mostrar erro (mantenha como estava)
-    function showError(fieldId, message) {
-        const errorElement = document.getElementById(fieldId + 'Error');
-        const inputElement = document.getElementById(fieldId);
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-        if (inputElement) {
-            inputElement.style.borderColor = 'var(--cor-erro)';
-        }
-    }
+    // ... (suas funções showError, clearError e máscara de CPF como antes) ...
+    function showError(fieldId, message) { /* ... (código da função) ... */ }
+    function clearError(fieldId) { /* ... (código da função) ... */ }
 
-    // Função para limpar erro (mantenha como estava)
-    function clearError(fieldId) {
-        const errorElement = document.getElementById(fieldId + 'Error');
-        const inputElement = document.getElementById(fieldId);
-        if (errorElement) {
-            errorElement.textContent = '';
-            errorElement.style.display = 'none';
-        }
-        if (inputElement) {
-            inputElement.style.borderColor = '#ccc'; // Cor padrão da borda
-        }
+    if (cpfInput) {
+        cpfInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ''); 
+            const maxLength = 11;
+            value = value.substring(0, maxLength); 
+
+            let maskedValue = '';
+            if (value.length > 0) {
+                maskedValue = value.substring(0,3);
+            }
+            if (value.length > 3) {
+                maskedValue += '.' + value.substring(3,6);
+            }
+            if (value.length > 6) {
+                maskedValue += '.' + value.substring(6,9);
+            }
+            if (value.length > 9) {
+                maskedValue += '-' + value.substring(9,11);
+            }
+            e.target.value = maskedValue;
+        });
     }
 
     if (cadastroForm) {
+        // ... (seu código de validação do cadastroForm existente) ...
         cadastroForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Sempre previna o envio padrão inicialmente
+            event.preventDefault();
             let isValid = true;
 
             clearError('nome');
             clearError('email');
+            clearError('dataNascimento'); 
+            clearError('cpf');            
             clearError('senha');
             clearError('confirmarSenha');
 
-            const nomeInput = document.getElementById('nome');
-            const emailInput = document.getElementById('email');
-            const senhaInput = document.getElementById('senha');
-            const confirmarSenhaInput = document.getElementById('confirmarSenha');
-
             const nome = nomeInput.value.trim();
             const email = emailInput.value.trim();
+            const dataNascimento = dataNascimentoInput.value; 
+            const cpf = cpfInput.value; 
             const senha = senhaInput.value;
             const confirmarSenha = confirmarSenhaInput.value;
 
@@ -62,6 +69,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 isValid = false;
             }
 
+            if (dataNascimento === '') {
+                showError('dataNascimento', 'Por favor, informe sua data de nascimento.');
+                isValid = false;
+            } else {
+                const hoje = new Date();
+                const dataNascObj = new Date(dataNascimento + "T00:00:00");
+                hoje.setHours(0, 0, 0, 0);
+                if (dataNascObj >= hoje) {
+                    showError('dataNascimento', 'A data de nascimento não pode ser no futuro ou hoje.');
+                    isValid = false;
+                }
+            }
+
+            if (cpf === '') { 
+                showError('cpf', 'Por favor, informe seu CPF.');
+                isValid = false;
+            } else if (!cpfInput.checkValidity()) { 
+                 showError('cpf', cpfInput.title || 'Formato de CPF inválido. Use 000.000.000-00.');
+                 isValid = false;
+            }
+            
             if (senha.length < 6) {
                 showError('senha', 'A senha deve ter pelo menos 6 caracteres.');
                 isValid = false;
@@ -75,29 +103,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 showError('senha', 'As senhas não coincidem.');
                 isValid = false;
             }
-
-            // Se a validação do frontend passar, redirecionamos para login.html
-            // Em um cenário real, aqui você enviaria os dados para o backend para re   gistrar o usuário.
+            
             if (isValid) {
-                // Simulação de cadastro bem-sucedido
-                alert('Cadastro "simulado" com sucesso! Redirecionando para o login...'); // Opcional
-                window.location.href = '../login/login.html'; // Redireciona para a página de login
+                alert('Validação do cliente OK! Enviando para o backend (simulado)...');
+                window.location.href = '../login/login.html';
             }
         });
-
-        const inputs = cadastroForm.querySelectorAll('.form-group input');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                clearError(input.id);
-                if (input.id === 'confirmarSenha' || input.id === 'senha') {
-                    const senhaVal = document.getElementById('senha').value;
-                    const confirmarSenhaVal = document.getElementById('confirmarSenha').value;
-                    if (senhaVal === confirmarSenhaVal) {
-                        clearError('senha');
-                        clearError('confirmarSenha');
+        
+        [nomeInput, emailInput, dataNascimentoInput, cpfInput, senhaInput, confirmarSenhaInput].forEach(input => {
+            if (input) { 
+                input.addEventListener('input', () => {
+                    clearError(input.id);
+                    if (input.id === 'confirmarSenha' || input.id === 'senha') {
+                        if (senhaInput.value === confirmarSenhaInput.value) {
+                            clearError('senha');
+                            clearError('confirmarSenha');
+                        }
                     }
-                }
-            });
+                    if (input.id === 'cpf') {
+                        if (input.checkValidity()) {
+                            clearError('cpf');
+                        }
+                    }
+                });
+            }
         });
     }
+
+    // Funcionalidade de mostrar/ocultar senha (ADICIONADO AQUI TAMBÉM)
+    const togglePasswordIcons = document.querySelectorAll('.toggle-password-visibility');
+    togglePasswordIcons.forEach(icon => {
+        icon.addEventListener('click', function() {
+            const targetInputId = this.getAttribute('data-target');
+            const targetInput = document.getElementById(targetInputId);
+
+            if (targetInput) {
+                if (targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    targetInput.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            }
+        });
+    });
 });
