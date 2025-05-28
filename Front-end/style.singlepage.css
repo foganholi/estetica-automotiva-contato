@@ -170,6 +170,46 @@ img {
 }
 
 
+
+.profile-icon-link {
+    color: var(--cor-texto-claro); /* Mesma cor dos outros links do menu */
+    font-size: 1.6rem; /* Tamanho do ícone, ajuste conforme necessário */
+    padding: 5px; /* Pequeno padding para aumentar a área clicável */
+    display: flex; /* Para alinhar ícone e texto (se o texto for visível) */
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.profile-icon-link:hover {
+    color: var(--cor-acento); /* Mesma cor de hover dos outros links */
+}
+
+.profile-icon-link .nav-text-mobile {
+    display: none; /* Esconde o texto "Perfil" em telas maiores (desktop) */
+    font-size: 1rem; /* Tamanho do texto para o menu mobile, se usado */
+    margin-left: 8px; /* Espaço entre o ícone e o texto "Perfil" */
+    font-weight: 600; /* Para combinar com outros links do menu */
+}
+
+/* Ajustes no menu mobile para o ícone de perfil */
+@media (max-width: 768px) {
+    
+
+    .profile-icon-link {
+        justify-content: center; /* Centraliza o ícone e texto no item de lista mobile */
+        padding: 10px; /* Mesmo padding dos outros links mobile */
+    }
+
+    .profile-icon-link i {
+        font-size: 1.3rem; /* Ajusta o tamanho do ícone no mobile */
+    }
+    
+    .profile-icon-link .nav-text-mobile {
+        display: inline-block; /* Mostra o texto "Perfil" no menu mobile */
+    }
+}
+
+
 /* SEÇÃO HERO (HOME) */
 .hero-section {
     background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url('../Front-end/img/porsche.png') no-repeat center center/cover; /* Verifique este caminho se style.css está na raiz do Front-end */
