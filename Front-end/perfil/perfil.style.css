@@ -7,7 +7,7 @@
     --cor-fundo-pagina: #f0f2f5;
     --cor-fundo-form: #FFFFFF;
     --cor-cinza-medio: #8D99AE;
-    --cor-sucesso: #2ecc71;
+    --cor-sucesso: #2ecc71; /* Verde mais vibrante */
     --cor-erro: #e74c3c;
     --fonte-titulo: 'Poppins', sans-serif;
     --fonte-corpo: 'Lato', sans-serif;
@@ -55,7 +55,7 @@ body {
     font-weight: 700;
     text-decoration: none;
 }
-.profile-header .logo-image-header {
+.profile-header .logo-image-header { /* Se você tiver uma imagem de logo */
     max-height: 40px;
     vertical-align: middle;
     margin-right: 10px;
@@ -69,40 +69,40 @@ body {
 
 
 /* CONTAINER PRINCIPAL DO FORMULÁRIO */
-.profile-container {
+.profile-container { /* Este container envolve apenas o formulário de perfil */
     flex: 1;
     display: flex;
-    align-items: center; /* Centraliza verticalmente se o conteúdo for menor que o espaço */
+    align-items: flex-start; /* Alinha no topo para quando a seção de agendamentos crescer */
     justify-content: center;
-    padding: 40px 20px;
+    padding: 40px 20px 20px; /* Reduzido padding inferior para dar espaço à nova seção */
 }
 
 .profile-form-wrapper {
     background-color: var(--cor-fundo-form);
-    padding: 30px 35px 40px; /* Ajustado padding */
+    padding: 30px 35px 40px;
     border-radius: 8px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     width: 100%;
-    max-width: 650px; /* Formulário pode ser um pouco mais largo */
+    max-width: 650px;
 }
 
 .profile-form-wrapper h2 {
     font-family: var(--fonte-titulo);
     color: var(--cor-primaria);
-    text-align: left; /* Títulos das seções do formulário alinhados à esquerda */
+    text-align: left;
     margin-bottom: 20px;
     font-size: 1.6rem;
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
 }
-.profile-form-wrapper form h2:first-of-type { /* Título "Informações Pessoais" */
+.profile-form-wrapper form h2:first-of-type {
     margin-top: 0;
 }
 
 
 /* GRUPOS DE FORMULÁRIO E INPUTS */
 .form-group {
-    margin-bottom: 22px; /* Espaçamento entre grupos */
+    margin-bottom: 22px;
 }
 
 .form-group label {
@@ -118,7 +118,7 @@ body {
 .form-group input[type="password"],
 .form-group input[type="date"] {
     width: 100%;
-    padding: 10px 12px; /* Padding um pouco menor para mais campos na tela */
+    padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
@@ -128,8 +128,12 @@ body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .form-group input[readonly] {
-    background-color: #e9ecef; /* Fundo diferente para campos readonly */
+    background-color: #e9ecef;
     cursor: not-allowed;
+}
+/* Adiciona classe para input com erro para mais flexibilidade */
+.form-group input.input-error {
+    border-color: var(--cor-erro) !important; /* Garante prioridade */
 }
 
 
@@ -160,17 +164,19 @@ body {
     color: var(--cor-erro);
     font-size: 0.85rem;
     margin-top: 5px;
+    min-height: 1em; /* Para evitar "pulos" no layout quando a mensagem aparece/desaparece */
     display: none;
 }
-.success-message { /* Para feedback de sucesso */
+.success-message {
     color: var(--cor-sucesso);
-    background-color: #e6f9f0;
-    border: 1px solid var(--cor-sucesso);
-    padding: 10px;
+    background-color: #e9f7ef; /* Fundo mais suave para sucesso */
+    border: 1px solid #a1dec5; /* Borda mais suave */
+    padding: 12px 15px; /* Aumentado padding */
     border-radius: 5px;
     margin-bottom: 20px;
     text-align: center;
-    display: none; /* Oculto por padrão */
+    font-size: 0.9rem; /* Aumentado tamanho da fonte */
+    display: none;
 }
 
 
@@ -185,10 +191,10 @@ body {
     font-size: 1rem;
     font-weight: 700;
     font-family: var(--fonte-titulo);
-    width: auto; /* Botão não ocupa largura total */
+    width: auto;
     min-width: 180px;
-    display: block; /* Para usar margin auto */
-    margin: 20px auto 0; /* Centraliza o botão */
+    display: block;
+    margin: 20px auto 0;
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -208,7 +214,7 @@ body {
 }
 
 .password-input-container input[type="password"],
-.password-input-container input[type="text"] {
+.password-input-container input[type="text"] { /* Aplicar a todos os inputs no container */
     padding-right: 40px !important; 
 }
 
@@ -219,8 +225,8 @@ body {
     transform: translateY(-50%);
     cursor: pointer;
     color: var(--cor-cinza-medio);
-    font-size: 1rem;
-    z-index: 2;
+    font-size: 1rem; /* Ajuste se necessário */
+    z-index: 2; /* Para garantir que fique sobre o input */
 }
 
 .toggle-password-visibility:hover {
@@ -230,11 +236,12 @@ body {
 
 /* RODAPÉ */
 .profile-footer {
-    background-color: #333; /* Rodapé mais simples para página interna */
+    background-color: #333;
     color: var(--cor-cinza-medio);
     text-align: center;
-    padding: 15px 20px;
-    font-size: 0.85rem;
+    padding: 20px 20px; /* Aumentado padding */
+    font-size: 0.9rem; /* Aumentado fonte */
+    margin-top: auto; /* Garante que o footer fique no final se o conteúdo for pequeno */
 }
 .profile-footer a {
     color: var(--cor-acento);
@@ -264,8 +271,9 @@ body {
     .profile-header h1 {
         font-size: 1.3rem;
     }
-     .profile-container {
+    .profile-container { /* Ajustado para manter no topo */
         padding: 20px 10px;
+        align-items: flex-start;
     }
     .profile-form-wrapper {
         padding: 20px 15px 25px;
@@ -287,5 +295,132 @@ body {
     .btn-submit-profile {
         padding: 10px 20px;
         font-size: 0.9rem;
+    }
+}
+
+/* --- ESTILOS PARA "MEUS AGENDAMENTOS" --- */
+.meus-agendamentos-section {
+    padding: 30px 20px 40px; /* Ajustado padding */
+    background-color: var(--cor-fundo-pagina); /* Mantém o fundo da página ou #f9f9f9 se preferir um leve contraste */
+    width: 100%;
+}
+
+.meus-agendamentos-section h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-primaria);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+.agendamentos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Aumentado minmax para cards um pouco maiores */
+    gap: 25px; /* Aumentado gap */
+    max-width: 1200px; /* Limita a largura máxima da lista */
+    margin: 0 auto; /* Centraliza a lista */
+}
+
+.agendamento-item {
+    background-color: var(--cor-fundo-form);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px 25px; /* Ajustado padding */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex; /* Para melhor controle interno */
+    flex-direction: column;
+}
+
+.agendamento-item:hover {
+    transform: translateY(-4px); /* Efeito hover sutil */
+    box-shadow: 0 7px 18px rgba(0,0,0,0.1);
+}
+
+.agendamento-item h3 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-acento);
+    font-size: 1.25rem; /* Levemente maior */
+    margin-bottom: 12px;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 10px;
+}
+
+.agendamento-item p {
+    font-size: 0.95rem;
+    margin-bottom: 10px; /* Aumentado margin */
+    color: var(--cor-texto-escuro);
+    line-height: 1.6;
+}
+
+.agendamento-item p strong {
+    color: var(--cor-primaria);
+    margin-right: 6px;
+    font-weight: 600; /* Destaque maior */
+}
+
+.agendamento-status {
+    display: inline-block;
+    padding: 6px 12px; /* Padding ajustado */
+    border-radius: 16px; /* Bordas mais arredondadas tipo "pill" */
+    font-size: 0.8rem; /* Fonte menor para status */
+    font-weight: 700; /* Mais forte */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 12px; /* Espaçamento do último parágrafo */
+    align-self: flex-start; /* Alinha à esquerda no card */
+}
+
+/* Cores de Status (consistentes com o que foi definido antes) */
+.status-pendente {
+    background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba;
+}
+.status-confirmado {
+    background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc;
+}
+.status-concluido {
+    background-color: #e2e3e5; color: #41464b; border: 1px solid #d3d6d8;
+}
+.status-cancelado {
+    background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7;
+}
+.status-desconhecido { /* Para status não mapeados */
+    background-color: #f0f0f0; color: #555; border: 1px solid #ddd;
+}
+
+.nenhum-agendamento, #agendamentosLoadingMsg {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--cor-cinza-medio);
+    padding: 25px 15px; /* Ajustado padding */
+    grid-column: 1 / -1; 
+    background-color: var(--cor-fundo-form); /* Para ter um fundo se a lista estiver vazia */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Ajustes de responsividade para a seção de agendamentos */
+@media (max-width: 768px) {
+    .meus-agendamentos-section h2 {
+        font-size: 1.6rem;
+    }
+    .agendamentos-list {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+        gap: 20px;
+    }
+    .agendamento-item h3 {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .meus-agendamentos-section {
+        padding: 20px 15px 30px;
+    }
+    .meus-agendamentos-section h2 {
+        font-size: 1.4rem;
+    }
+     .agendamento-item {
+        padding: 15px 20px;
     }
 }

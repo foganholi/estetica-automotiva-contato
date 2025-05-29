@@ -213,6 +213,24 @@ body {
     transform: translateY(-2px);
 }
 
+.user-info-scheduling {
+    background-color: #e9f5ff; /* Um azul bem claro */
+    border-left: 4px solid var(--cor-primaria);
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.user-info-scheduling p {
+    margin: 5px 0;
+    color: var(--cor-texto-escuro);
+}
+
+.user-info-scheduling strong {
+    color: var(--cor-primaria);
+}
+
 /* RODAPÉ */
 .page-footer {
     background-color: #2c3e50; /* Cor um pouco diferente do header principal */

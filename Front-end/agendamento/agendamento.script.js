@@ -1,111 +1,118 @@
 document.addEventListener('DOMContentLoaded', function() {
     const agendamentoForm = document.getElementById('agendamentoForm');
     
-    // Inputs
-    const nomeCompletoInput = document.getElementById('nomeCompleto');
-    const telefoneInput = document.getElementById('telefone');
-    const emailInput = document.getElementById('email');
+    // Inputs focais para o usuário logado
     const veiculoInput = document.getElementById('veiculo');
     const servicosDesejadosInput = document.getElementById('servicosDesejados');
     const dataPreferidaInput = document.getElementById('dataPreferida');
     const horarioPreferidoInput = document.getElementById('horarioPreferido');
-    // const observacoesInput = document.getElementById('observacoes'); // Não necessita validação JS obrigatória no exemplo
+    const observacoesInput = document.getElementById('observacoes');
 
     const successMessageDiv = document.getElementById('successMessage');
+    const generalErrorDiv = document.getElementById('generalError');
 
-    // Funções de erro (similares às outras páginas)
-    function showError(fieldId, message) {
+    // Elementos para exibir info do usuário
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+
+    // SIMULAÇÃO: Obter dados do usuário logado (Ex: do localStorage)
+    // No seu backend, você teria o usuário da sessão.
+    // Para a simulação, vamos usar dados mockados ou do localStorage como no script.js da index
+    const userIsLoggedIn = localStorage.getItem('isUserLoggedInMarquesAutoDetail') === 'true';
+    const userEmail = localStorage.getItem('userEmailMarquesAutoDetail'); // Supondo que você guarde o email
+    // Para o nome, precisaríamos de um campo 'userNameMarquesAutoDetail' no localStorage ou mockar.
+    // Vamos mockar o nome por agora se não tiver.
+    const userName = localStorage.getItem('userNameMarquesAutoDetail') || (userEmail ? userEmail.split('@')[0] : "Cliente");
+
+    if (userIsLoggedIn && userNameDisplay && userEmailDisplay) {
+        userNameDisplay.textContent = userName;
+        userEmailDisplay.textContent = userEmail || "Email não disponível";
+    } else if (userNameDisplay) {
+        // Se não estiver logado (teoricamente não deveria chegar aqui com a lógica da index)
+        // Ou se os elementos não existirem
+        const userInfoDiv = document.getElementById('userInfoForScheduling');
+        if(userInfoDiv) userInfoDiv.innerHTML = "<p>Por favor, <a href='../login/login.html'>faça login</a> para agendar.</p>";
+        if(agendamentoForm) agendamentoForm.style.display = 'none'; // Esconde o form se não logado
+    }
+
+
+    function showError(fieldId, message, isGeneral = false) {
+        if (isGeneral) {
+            if (generalErrorDiv) {
+                generalErrorDiv.textContent = message;
+                generalErrorDiv.style.display = 'block';
+            } else {
+                alert(message); // Fallback
+            }
+            return;
+        }
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
         if (errorElement) {
             errorElement.textContent = message;
             errorElement.style.display = 'block';
         }
-        if (inputElement) inputElement.style.borderColor = 'var(--cor-erro)';
+        if (inputElement) {
+            inputElement.style.borderColor = 'var(--cor-erro)';
+            inputElement.classList.add('input-error');
+        }
     }
 
-    function clearError(fieldId) {
+    function clearError(fieldId, isGeneral = false) {
+        if (isGeneral) {
+            if (generalErrorDiv) {
+                generalErrorDiv.textContent = '';
+                generalErrorDiv.style.display = 'none';
+            }
+            return;
+        }
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
         if (errorElement) {
             errorElement.textContent = '';
             errorElement.style.display = 'none';
         }
-        if (inputElement) inputElement.style.borderColor = '#ced4da'; // Cor da borda padrão
+        if (inputElement) {
+            inputElement.style.borderColor = '#ced4da';
+            inputElement.classList.remove('input-error');
+        }
     }
 
     function showSuccessMessage(message) {
         if (successMessageDiv) {
             successMessageDiv.textContent = message;
             successMessageDiv.style.display = 'block';
-            // Rola para a mensagem de sucesso
             successMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => {
                 successMessageDiv.style.display = 'none';
-            }, 7000); // Mensagem some após 7 segundos
+            }, 7000);
         } else {
-            alert(message); // Fallback
+            alert(message);
         }
     }
     
-    // Máscara simples para telefone (XX) XXXXX-XXXX
-    if (telefoneInput) {
-        telefoneInput.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            const maxLength = 11; // Para (XX) XXXXX-XXXX
-            value = value.substring(0, maxLength);
-            let maskedValue = '';
-            if (value.length > 0) {
-                maskedValue = '(' + value.substring(0,2);
-            }
-            if (value.length > 2) {
-                maskedValue += ') ' + value.substring(2,7);
-            }
-            if (value.length > 7) {
-                maskedValue += '-' + value.substring(7,11);
-            }
-            e.target.value = maskedValue;
-        });
-    }
-
-
-    // Definir data mínima para o campo de data preferida (não pode ser no passado)
     if (dataPreferidaInput) {
         const hoje = new Date();
-        const dia = ("0" + hoje.getDate()).slice(-2);
-        const mes = ("0" + (hoje.getMonth() + 1)).slice(-2);
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
         const ano = hoje.getFullYear();
         dataPreferidaInput.min = `${ano}-${mes}-${dia}`;
     }
 
-
     if (agendamentoForm) {
         agendamentoForm.addEventListener('submit', function(event) {
             event.preventDefault();
+            if (!userIsLoggedIn) {
+                showError('general', 'Você precisa estar logado para fazer um agendamento.', true);
+                return;
+            }
             let isValid = true;
 
-            // Limpar erros anteriores
-            const fieldsToValidate = ['nomeCompleto', 'telefone', 'email', 'veiculo', 'servicosDesejados', 'dataPreferida', 'horarioPreferido'];
+            const fieldsToValidate = ['veiculo', 'servicosDesejados', 'dataPreferida', 'horarioPreferido'];
             fieldsToValidate.forEach(id => clearError(id));
+            clearError('general', true); // Limpa erro geral
             if(successMessageDiv) successMessageDiv.style.display = 'none';
 
-
-            // Validações
-            if (nomeCompletoInput.value.trim() === '') {
-                showError('nomeCompleto', 'Nome completo é obrigatório.');
-                isValid = false;
-            }
-            if (telefoneInput.value.replace(/\D/g, '').length < 10) { // Verifica se tem pelo menos 10 dígitos
-                showError('telefone', 'Telefone inválido. Inclua o DDD.');
-                isValid = false;
-            }
-            if (emailInput.value.trim() === '') {
-                showError('email', 'Email é obrigatório.');
-                isValid = false;
-            } else if (!/\S+@\S+\.\S+/.test(emailInput.value.trim())) {
-                showError('email', 'Formato de email inválido.');
-                isValid = false;
-            }
             if (veiculoInput.value.trim() === '') {
                 showError('veiculo', 'Informação do veículo é obrigatória.');
                 isValid = false;
@@ -119,68 +126,80 @@ document.addEventListener('DOMContentLoaded', function() {
                 isValid = false;
             } else {
                 const hoje = new Date();
-                hoje.setHours(0,0,0,0); // Zera a hora para comparar apenas a data
-                const dataSelecionada = new Date(dataPreferidaInput.value + "T00:00:00"); // Adiciona T00:00:00 para evitar problemas de fuso
+                hoje.setHours(0,0,0,0); 
+                const dataSelecionada = new Date(dataPreferidaInput.value + "T00:00:00"); 
                 if (dataSelecionada < hoje) {
-                    showError('dataPreferida', 'A data não pode ser no passado.');
+                    showError('dataPreferida', 'A data não pode ser anterior ao dia de hoje.');
                     isValid = false;
                 }
             }
             if (horarioPreferidoInput.value === '') {
                 showError('horarioPreferido', 'Horário preferido é obrigatório.');
                 isValid = false;
+            } else {
+                const [hora, minuto] = horarioPreferidoInput.value.split(':').map(Number);
+                // Verifica se o horário está dentro do permitido (08:00 - 17:30)
+                if (hora < 8 || hora > 17 || (hora === 17 && minuto > 30)) {
+                     showError('horarioPreferido', 'Horário deve ser entre 08:00 e 17:30.');
+                     isValid = false;
+                }
             }
-            // Validação de horário comercial (exemplo)
-            const [hora, minuto] = horarioPreferidoInput.value.split(':').map(Number);
-            if (hora < 8 || hora > 18 || (hora === 18 && minuto > 0)) {
-                 showError('horarioPreferido', 'Horário deve ser entre 08:00 e 18:00.');
-                 isValid = false;
-            }
-
 
             if (isValid) {
-                // Simulação de envio para o backend
                 console.log('Solicitação de agendamento válida e pronta para enviar:');
                 const formData = {
-                    nome: nomeCompletoInput.value.trim(),
-                    telefone: telefoneInput.value,
-                    email: emailInput.value.trim(),
+                    // userId: backend pegaria da sessão
+                    userEmail: userEmail, // Enviando email para identificar o usuário
+                    userName: userName,     // Enviando nome
                     veiculo: veiculoInput.value.trim(),
                     servico: servicosDesejadosInput.value,
-                    data: dataPreferidaInput.value,
-                    hora: horarioPreferidoInput.value,
-                    observacoes: document.getElementById('observacoes').value.trim()
+                    dataPreferida: dataPreferidaInput.value,
+                    horarioPreferido: horarioPreferidoInput.value,
+                    observacoes: observacoesInput.value.trim()
                 };
                 console.log(formData);
                 
-                showSuccessMessage('Sua solicitação de agendamento foi enviada com sucesso! Entraremos em contato em breve para confirmar.');
-                agendamentoForm.reset(); // Limpa o formulário
+                // SIMULAÇÃO DE SUBMISSÃO E RESPOSTA DO BACKEND
+                // Substitua por sua lógica fetch real
+                showSuccessMessage('Sua solicitação de agendamento foi enviada! Você pode verificar o status na sua página de perfil.');
                 
-                // Em um cenário real, aqui você faria uma chamada fetch() para sua API backend
-                // Ex: fetch('/api/agendamentos', { method: 'POST', body: JSON.stringify(formData), headers: {'Content-Type': 'application/json'} })
-                //    .then(response => response.json())
-                //    .then(data => { showSuccessMessage('Agendamento enviado!'); agendamentoForm.reset(); })
-                //    .catch(error => { showError('geral', 'Erro ao enviar agendamento. Tente novamente.'); });
+                // Adicionar este agendamento mockado ao localStorage para exibir no perfil (APENAS PARA SIMULAÇÃO)
+                const agendamentosMockados = JSON.parse(localStorage.getItem('mockUserAgendamentos')) || [];
+                const novoAgendamento = {
+                    id: 'AG' + Date.now(), // ID único simples
+                    servicoNome: servicosDesejadosInput.options[servicosDesejadosInput.selectedIndex].text,
+                    data: dataPreferidaInput.value,
+                    horario: horarioPreferidoInput.value,
+                    veiculo: veiculoInput.value.trim(),
+                    status: 'Pendente' // Status inicial
+                };
+                agendamentosMockados.push(novoAgendamento);
+                localStorage.setItem('mockUserAgendamentos', JSON.stringify(agendamentosMockados));
+
+                agendamentoForm.reset(); 
+                dataPreferidaInput.min = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`; // Reset min date
+                fieldsToValidate.forEach(id => clearError(id));
+
             } else {
-                // Rola para a primeira mensagem de erro para o usuário ver
-                const firstError = document.querySelector('.error-message[style*="display: block"]');
-                if (firstError) {
+                const firstError = document.querySelector('.agendamento-form-wrapper .error-message[style*="display: block"]');
+                if (firstError && firstError.id !== 'generalError') { // Não rolar para o erro geral no topo
                     firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else if (generalErrorDiv.style.display === 'block') {
+                     generalErrorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }
         });
         
-        // Limpar erros ao digitar
         const allInputsAndSelects = agendamentoForm.querySelectorAll('input, select, textarea');
         allInputsAndSelects.forEach(input => {
-            input.addEventListener('input', () => clearError(input.id));
-            if (input.type === 'date' || input.type === 'time' || input.tagName === 'SELECT') {
-                 input.addEventListener('change', () => clearError(input.id)); // Para date, time e select, 'change' é mais apropriado
-            }
+            const eventType = (input.tagName === 'SELECT' || input.type === 'date' || input.type === 'time') ? 'change' : 'input';
+            input.addEventListener(eventType, () => {
+                clearError(input.id);
+                clearError('general', true); // Limpa erro geral ao interagir com qualquer campo
+            });
         });
     }
     
-    // Atualizar o ano no rodapé
     const currentYearSpan = document.getElementById('currentYear');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();

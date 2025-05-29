@@ -22,30 +22,15 @@
 
     <main class="agendamento-container">
         <div class="agendamento-form-wrapper">
-            <p class="form-intro">Preencha os campos abaixo para solicitar o seu horário. Entraremos em contato para confirmar.</p>
+            <div id="userInfoForScheduling" class="user-info-scheduling">
+                <p>Agendando como: <strong id="userNameDisplay">Carregando...</strong> (<span id="userEmailDisplay"></span>)</p>
+                <p>Usaremos os dados do seu perfil para este agendamento.</p>
+            </div>
             
             <div id="successMessage" class="success-message" style="display: none;"></div>
+            <div id="generalError" class="error-message" style="text-align: center; margin-bottom: 15px;"></div>
             
             <form id="agendamentoForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nomeCompleto">Nome Completo:</label>
-                        <input type="text" id="nomeCompleto" name="nomeCompleto" required>
-                        <div class="error-message" id="nomeCompletoError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefone">Telefone / WhatsApp:</label>
-                        <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
-                        <div class="error-message" id="telefoneError"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                    <div class="error-message" id="emailError"></div>
-                </div>
-
                 <div class="form-group">
                     <label for="veiculo">Veículo (Marca/Modelo/Ano):</label>
                     <input type="text" id="veiculo" name="veiculo" placeholder="Ex: Honda Civic 2020" required>
@@ -56,10 +41,10 @@
                     <label for="servicosDesejados">Serviço(s) Desejado(s):</label>
                     <select id="servicosDesejados" name="servicosDesejados" required>
                         <option value="" disabled selected>Selecione um serviço...</option>
-                        <option value="higienizacao">Higienização Interna</option>
-                        <option value="peliculas">Aplicação de Películas</option>
-                        <option value="polimento">Polimento Técnico</option>
-                        <option value="vitrificacao">Vitrificação de Pintura</option>
+                        <option value="higienizacao_interna">Higienização Interna</option>
+                        <option value="aplicacao_peliculas">Aplicação de Películas</option>
+                        <option value="polimento_tecnico">Polimento Técnico</option>
+                        <option value="vitrificacao_pintura">Vitrificação de Pintura</option>
                         <option value="full_detailing">Full Detailing</option>
                         <option value="outros">Outros (especificar abaixo)</option>
                     </select>
@@ -68,25 +53,24 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="dataPreferida">Data Preferida:</label>
+                        <label for="dataPreferida">Escolha a Data:</label>
                         <input type="date" id="dataPreferida" name="dataPreferida" required>
                         <div class="error-message" id="dataPreferidaError"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="horarioPreferido">Horário Preferido:</label>
-                        <input type="time" id="horarioPreferido" name="horarioPreferido" min="08:00" max="18:00" required>
-                        <small class="form-text">Atendemos das 08:00 às 18:00.</small>
+                        <label for="horarioPreferido">Escolha o Horário:</label>
+                        <input type="time" id="horarioPreferido" name="horarioPreferido" min="08:00" max="17:30" step="1800" required> <small class="form-text">Atendimento das 08:00 às 18:00. Intervalos de 30 minutos.</small>
                         <div class="error-message" id="horarioPreferidoError"></div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="observacoes">Observações Adicionais:</label>
-                    <textarea id="observacoes" name="observacoes" rows="4" placeholder="Detalhes sobre o serviço, outros serviços desejados, etc."></textarea>
+                    <textarea id="observacoes" name="observacoes" rows="4" placeholder="Se selecionou 'Outros', especifique aqui. Qualquer detalhe adicional..."></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit-agendamento">Enviar Solicitação</button>
+                <button type="submit" class="btn-submit-agendamento">Solicitar Agendamento</button>
             </form>
         </div>
     </main>
