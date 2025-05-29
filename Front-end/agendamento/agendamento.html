@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Marques AutoDetail</title>
+    <link rel="stylesheet" href="agendamento.style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <a href="../index.html" class="logo-link-header">
+                Marques AutoDetail
+            </a>
+            <h1>Faça seu Agendamento</h1>
+        </div>
+    </header>
+
+    <main class="agendamento-container">
+        <div class="agendamento-form-wrapper">
+            <p class="form-intro">Preencha os campos abaixo para solicitar o seu horário. Entraremos em contato para confirmar.</p>
+            
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+            
+            <form id="agendamentoForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nomeCompleto">Nome Completo:</label>
+                        <input type="text" id="nomeCompleto" name="nomeCompleto" required>
+                        <div class="error-message" id="nomeCompletoError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone / WhatsApp:</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
+                        <div class="error-message" id="telefoneError"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="veiculo">Veículo (Marca/Modelo/Ano):</label>
+                    <input type="text" id="veiculo" name="veiculo" placeholder="Ex: Honda Civic 2020" required>
+                    <div class="error-message" id="veiculoError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="servicosDesejados">Serviço(s) Desejado(s):</label>
+                    <select id="servicosDesejados" name="servicosDesejados" required>
+                        <option value="" disabled selected>Selecione um serviço...</option>
+                        <option value="higienizacao">Higienização Interna</option>
+                        <option value="peliculas">Aplicação de Películas</option>
+                        <option value="polimento">Polimento Técnico</option>
+                        <option value="vitrificacao">Vitrificação de Pintura</option>
+                        <option value="full_detailing">Full Detailing</option>
+                        <option value="outros">Outros (especificar abaixo)</option>
+                    </select>
+                    <div class="error-message" id="servicosDesejadosError"></div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataPreferida">Data Preferida:</label>
+                        <input type="date" id="dataPreferida" name="dataPreferida" required>
+                        <div class="error-message" id="dataPreferidaError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="horarioPreferido">Horário Preferido:</label>
+                        <input type="time" id="horarioPreferido" name="horarioPreferido" min="08:00" max="18:00" required>
+                        <small class="form-text">Atendemos das 08:00 às 18:00.</small>
+                        <div class="error-message" id="horarioPreferidoError"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações Adicionais:</label>
+                    <textarea id="observacoes" name="observacoes" rows="4" placeholder="Detalhes sobre o serviço, outros serviços desejados, etc."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit-agendamento">Enviar Solicitação</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <p>&copy; <span id="currentYear"></span> Marques AutoDetail. Todos os direitos reservados. <a href="../index.html">Voltar ao site principal</a></p>
+    </footer>
+
+    <script src="agendamento.script.js"></script>
+</body>
+</html>

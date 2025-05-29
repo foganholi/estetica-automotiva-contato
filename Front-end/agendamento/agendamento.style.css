@@ -1,0 +1,279 @@
+/* ESTILOS PARA A PÁGINA DE AGENDAMENTO */
+:root {
+    --cor-primaria: #0D2C54; /* Azul Escuro */
+    --cor-acento: #FCA311;  /* Dourado/Amarelo Queimado */
+    --cor-texto-claro: #EDF2F4;
+    --cor-texto-escuro: #1f1f1f;
+    --cor-fundo-pagina: #f0f2f5; /* Cinza muito claro para o fundo */
+    --cor-fundo-form: #FFFFFF; /* Branco para o formulário */
+    --cor-cinza-medio: #8D99AE;
+    --cor-sucesso: #27ae60; /* Verde para sucesso */
+    --cor-erro: #e74c3c;    /* Vermelho para erro */
+    --fonte-titulo: 'Poppins', sans-serif;
+    --fonte-corpo: 'Lato', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: var(--cor-fundo-pagina);
+    color: var(--cor-texto-escuro);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px; /* Para o header */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* CABEÇALHO DA PÁGINA */
+.page-header {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    padding: 18px 0; /* Um pouco mais de padding */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 100%;
+}
+.page-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.page-header .logo-link-header {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-texto-claro);
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.page-header .logo-image-header { /* Se você adicionar uma imagem de logo no header */
+    max-height: 35px;
+    margin-right: 10px;
+}
+.page-header h1 {
+    font-family: var(--fonte-titulo);
+    color: var(--cor-texto-claro);
+    font-size: 1.7rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* CONTAINER PRINCIPAL DO AGENDAMENTO */
+.agendamento-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha o form no topo se houver muito espaço */
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.agendamento-form-wrapper {
+    background-color: var(--cor-fundo-form);
+    padding: 35px 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 750px; /* Formulário pode ser mais largo para agendamento */
+}
+
+.agendamento-form-wrapper .form-intro {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    color: var(--cor-cinza-medio);
+}
+
+/* GRUPOS DE FORMULÁRIO E INPUTS */
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Quebra em telas menores */
+}
+.form-row .form-group {
+    flex: 1;
+    min-width: 250px; /* Para que não fiquem muito espremidos */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: var(--cor-primaria);
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #ced4da; /* Borda um pouco mais suave */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto-escuro);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group select {
+    appearance: none; /* Remove estilo padrão do select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23555%22/%3E%3C/svg%3E'); /* Seta customizada */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px; /* Espaço para a seta */
+}
+
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="time"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--cor-acento);
+    outline: none;
+    box-shadow: 0 0 0 3.5px rgba(252, 163, 17, 0.2); /* Sombra de foco mais suave */
+}
+
+.form-text { /* Texto de ajuda abaixo dos campos */
+    display: block;
+    font-size: 0.8rem;
+    color: var(--cor-cinza-medio);
+    margin-top: 6px;
+}
+
+
+/* MENSAGENS DE ERRO E SUCESSO */
+.error-message {
+    color: var(--cor-erro);
+    font-size: 0.8rem;
+    margin-top: 6px;
+    display: none;
+}
+.success-message {
+    color: var(--cor-sucesso);
+    background-color: #e6f9f0;
+    border: 1px solid var(--cor-sucesso);
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+
+/* BOTÃO DE SUBMISSÃO */
+.btn-submit-agendamento {
+    background-color: var(--cor-acento);
+    color: var(--cor-primaria);
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--fonte-titulo);
+    display: block; 
+    width: auto;
+    min-width: 220px;
+    margin: 30px auto 0; 
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.btn-submit-agendamento:hover {
+    background-color: #e89400; /* Tom mais escuro do acento */
+    transform: translateY(-2px);
+}
+
+/* RODAPÉ */
+.page-footer {
+    background-color: #2c3e50; /* Cor um pouco diferente do header principal */
+    color: var(--cor-cinza-medio);
+    text-align: center;
+    padding: 18px 20px;
+    font-size: 0.85rem;
+    width: 100%;
+}
+.page-footer a {
+    color: var(--cor-acento);
+    text-decoration: none;
+}
+.page-footer a:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    .agendamento-form-wrapper {
+        padding: 30px 25px;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 0; /* Remove gap pois os form-groups já tem margin-bottom */
+    }
+    .form-row .form-group {
+        min-width: 100%; /* Ocupa toda a largura */
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header .logo-link-header {
+        font-size: 1.3rem;
+    }
+    .page-header h1 {
+        font-size: 1.2rem;
+        text-align: right; /* Para dar espaço à logo */
+    }
+    .agendamento-container {
+        padding: 20px 10px;
+    }
+    .agendamento-form-wrapper {
+        padding: 25px 20px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="date"],
+    .form-group input[type="time"],
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    .btn-submit-agendamento {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        min-width: 100%; /* Botão ocupa largura total no mobile */
+    }
+}
