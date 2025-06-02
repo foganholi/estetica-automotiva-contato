@@ -52,11 +52,21 @@
                 </div>
                 
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="dataPreferida">Escolha a Data:</label>
-                        <input type="date" id="dataPreferida" name="dataPreferida" required>
-                        <div class="error-message" id="dataPreferidaError"></div>
+                <div class="form-group">
+                    <label for="dataPreferida">Escolha a Data:</label>
+                    <input type="date" id="dataPreferida" name="dataPreferida" required>
+                    <div class="error-message" id="dataPreferidaError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="horarioPreferido">Escolha o Horário:</label>
+                    <select id="horarioPreferido" name="horarioPreferido" required>
+                        <option value="" disabled selected>Selecione uma data primeiro...</option>
+                    </select>
+                        <small class="form-text">Atendimento das 08:00 às 18:00.</small>
+                        <div class="error-message" id="horarioPreferidoError"></div>
                     </div>
+                </div>
 
                     <div class="form-group">
                         <label for="horarioPreferido">Escolha o Horário:</label>

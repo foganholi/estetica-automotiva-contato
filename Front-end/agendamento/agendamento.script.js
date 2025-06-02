@@ -1,81 +1,36 @@
+// Em: agendamento/agendamento.script.js
 document.addEventListener('DOMContentLoaded', function() {
-    const agendamentoForm = document.getElementById('agendamentoForm');
-    
-    // Inputs focais para o usuário logado
-    const veiculoInput = document.getElementById('veiculo');
-    const servicosDesejadosInput = document.getElementById('servicosDesejados');
+    // ... (seu código existente: seletores de formulário, inputs, userInfoForScheduling, etc.) ...
     const dataPreferidaInput = document.getElementById('dataPreferida');
-    const horarioPreferidoInput = document.getElementById('horarioPreferido');
-    const observacoesInput = document.getElementById('observacoes');
+    const horarioPreferidoSelect = document.getElementById('horarioPreferido'); // O select para os horários
+    const successMessageDiv = document.getElementById('successMessage'); // Para mensagens de sucesso
+    const generalErrorDiv = document.getElementById('generalError'); // Para erros gerais
+    const agendamentoForm = document.getElementById('agendamentoForm'); // Formulário de agendamento
 
-    const successMessageDiv = document.getElementById('successMessage');
-    const generalErrorDiv = document.getElementById('generalError');
-
-    // Elementos para exibir info do usuário
-    const userNameDisplay = document.getElementById('userNameDisplay');
-    const userEmailDisplay = document.getElementById('userEmailDisplay');
-
-    // SIMULAÇÃO: Obter dados do usuário logado (Ex: do localStorage)
-    // No seu backend, você teria o usuário da sessão.
-    // Para a simulação, vamos usar dados mockados ou do localStorage como no script.js da index
-    const userIsLoggedIn = localStorage.getItem('isUserLoggedInMarquesAutoDetail') === 'true';
-    const userEmail = localStorage.getItem('userEmailMarquesAutoDetail'); // Supondo que você guarde o email
-    // Para o nome, precisaríamos de um campo 'userNameMarquesAutoDetail' no localStorage ou mockar.
-    // Vamos mockar o nome por agora se não tiver.
-    const userName = localStorage.getItem('userNameMarquesAutoDetail') || (userEmail ? userEmail.split('@')[0] : "Cliente");
-
-    if (userIsLoggedIn && userNameDisplay && userEmailDisplay) {
-        userNameDisplay.textContent = userName;
-        userEmailDisplay.textContent = userEmail || "Email não disponível";
-    } else if (userNameDisplay) {
-        // Se não estiver logado (teoricamente não deveria chegar aqui com a lógica da index)
-        // Ou se os elementos não existirem
-        const userInfoDiv = document.getElementById('userInfoForScheduling');
-        if(userInfoDiv) userInfoDiv.innerHTML = "<p>Por favor, <a href='../login/login.html'>faça login</a> para agendar.</p>";
-        if(agendamentoForm) agendamentoForm.style.display = 'none'; // Esconde o form se não logado
-    }
-
-
+    // ... (funções showError, clearError, showSuccessMessage como definidas anteriormente) ...
     function showError(fieldId, message, isGeneral = false) {
         if (isGeneral) {
             if (generalErrorDiv) {
                 generalErrorDiv.textContent = message;
                 generalErrorDiv.style.display = 'block';
-            } else {
-                alert(message); // Fallback
-            }
+            } else { alert(message); }
             return;
         }
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-        if (inputElement) {
-            inputElement.style.borderColor = 'var(--cor-erro)';
-            inputElement.classList.add('input-error');
-        }
+        if (errorElement) { errorElement.textContent = message; errorElement.style.display = 'block'; }
+        if (inputElement) { inputElement.style.borderColor = 'var(--cor-erro)'; inputElement.classList.add('input-error'); }
     }
 
     function clearError(fieldId, isGeneral = false) {
         if (isGeneral) {
-            if (generalErrorDiv) {
-                generalErrorDiv.textContent = '';
-                generalErrorDiv.style.display = 'none';
-            }
+            if (generalErrorDiv) { generalErrorDiv.textContent = ''; generalErrorDiv.style.display = 'none'; }
             return;
         }
         const errorElement = document.getElementById(fieldId + 'Error');
         const inputElement = document.getElementById(fieldId);
-        if (errorElement) {
-            errorElement.textContent = '';
-            errorElement.style.display = 'none';
-        }
-        if (inputElement) {
-            inputElement.style.borderColor = '#ced4da';
-            inputElement.classList.remove('input-error');
-        }
+        if (errorElement) { errorElement.textContent = ''; errorElement.style.display = 'none'; }
+        if (inputElement) { inputElement.style.borderColor = '#ced4da'; inputElement.classList.remove('input-error'); }
     }
 
     function showSuccessMessage(message) {
@@ -83,125 +38,192 @@ document.addEventListener('DOMContentLoaded', function() {
             successMessageDiv.textContent = message;
             successMessageDiv.style.display = 'block';
             successMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => {
-                successMessageDiv.style.display = 'none';
-            }, 7000);
-        } else {
-            alert(message);
+            setTimeout(() => { successMessageDiv.style.display = 'none'; }, 7000);
+        } else { alert(message); }
+    }
+
+
+    /**
+     * Função para buscar horários disponíveis da API e popular o select.
+     * @param {string} dataSelecionada - A data no formato YYYY-MM-DD.
+     */
+    async function carregarHorariosDisponiveis(dataSelecionada) {
+        if (!dataSelecionada) {
+            horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Selecione uma data primeiro...</option>';
+            return;
+        }
+
+        // Limpa opções anteriores e mostra mensagem de carregamento
+        horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Carregando horários...</option>';
+        
+        // Monta a URL para o endpoint.
+        // Se o seu backend espera a data como parâmetro de query, adicione-a.
+        // Exemplo: `http://localhost:8080/agenda/horarioDisponivel?data=${dataSelecionada}`
+        // Se não precisar de parâmetro de data (buscar todos os horários disponíveis em geral), use apenas a URL base.
+        const url = `http://localhost:8080/agenda/horarioDisponivel?date=${dataSelecionada}`; 
+        // const url = 'http://localhost:8080/agenda/horarioDisponivel'; // Use esta se não houver parâmetro de data
+
+        console.log(`Buscando horários em: ${url}`);
+
+        try {
+            const response = await fetch(url); // Faz a requisição GET
+
+            if (!response.ok) {
+                // Se a resposta não for OK (ex: erro 404, 500), lança um erro
+                throw new Error(`Erro ao buscar horários: ${response.status} - ${response.statusText}`);
+            }
+
+            const horarios = await response.json(); // Converte a resposta para JSON
+            // O backend deve retornar um array. Ex: ["08:00", "08:30", "09:00"]
+            // Ou um array de objetos: [{ "hora": "08:00", "status": "Disponivel" }, ...]
+
+            horarioPreferidoSelect.innerHTML = ''; // Limpa a mensagem "Carregando..."
+
+            if (horarios && horarios.length > 0) {
+                // Adiciona uma opção padrão "Selecione um horário"
+                const optionDefault = new Option('Selecione um horário...', '');
+                optionDefault.disabled = true;
+                optionDefault.selected = true;
+                horarioPreferidoSelect.add(optionDefault);
+
+                horarios.forEach(horario => {
+                    let valorHorario;
+                    let textoHorario;
+
+                    // Adapte esta parte conforme a estrutura exata do JSON que seu backend retorna
+                    if (typeof horario === 'string') { // Se for um array de strings ["09:00", "10:00"]
+                        valorHorario = horario;
+                        textoHorario = horario;
+                    } else if (typeof horario === 'object' && horario.hora && horario.status === 'Disponivel') { // Se for um array de objetos ex: {hora: "09:00", status: "Disponivel"}
+                        valorHorario = horario.hora;
+                        textoHorario = horario.hora; // Você pode formatar este texto se quiser
+                    } else {
+                        console.warn("Formato de horário não esperado:", horario);
+                        return; // Pula este item se o formato não for o esperado
+                    }
+                    
+                    // Adiciona apenas horários dentro do seu range de atendimento (08:00 - 17:30)
+                    const [h, m] = valorHorario.split(':').map(Number);
+                    if (h >= 8 && (h < 18 || (h === 17 && m <= 30))) {
+                        const option = new Option(textoHorario, valorHorario);
+                        horarioPreferidoSelect.add(option);
+                    }
+                });
+                
+                // Se, após filtrar, só sobrou a opção "Selecione...", significa que não há horários válidos.
+                if (horarioPreferidoSelect.options.length <= 1) {
+                    horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Nenhum horário disponível para esta data.</option>';
+                }
+
+            } else {
+                // Se a API retornar um array vazio
+                horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Nenhum horário disponível para esta data.</option>';
+            }
+        } catch (error) {
+            console.error('Falha ao carregar horários disponíveis:', error);
+            horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Erro ao carregar horários.</option>';
+            // Opcional: mostrar um erro mais visível para o usuário
+            showError('horarioPreferido', 'Não foi possível carregar os horários. Tente selecionar a data novamente.');
         }
     }
-    
+
+    // Adiciona o listener para o campo de data
     if (dataPreferidaInput) {
+        // Define a data mínima como hoje
         const hoje = new Date();
         const dia = String(hoje.getDate()).padStart(2, '0');
-        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Meses são 0-indexados
         const ano = hoje.getFullYear();
         dataPreferidaInput.min = `${ano}-${mes}-${dia}`;
-    }
 
-    if (agendamentoForm) {
-        agendamentoForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (!userIsLoggedIn) {
-                showError('general', 'Você precisa estar logado para fazer um agendamento.', true);
-                return;
-            }
-            let isValid = true;
-
-            const fieldsToValidate = ['veiculo', 'servicosDesejados', 'dataPreferida', 'horarioPreferido'];
-            fieldsToValidate.forEach(id => clearError(id));
-            clearError('general', true); // Limpa erro geral
-            if(successMessageDiv) successMessageDiv.style.display = 'none';
-
-            if (veiculoInput.value.trim() === '') {
-                showError('veiculo', 'Informação do veículo é obrigatória.');
-                isValid = false;
-            }
-            if (servicosDesejadosInput.value === '') {
-                showError('servicosDesejados', 'Selecione ao menos um serviço.');
-                isValid = false;
-            }
-            if (dataPreferidaInput.value === '') {
-                showError('dataPreferida', 'Data preferida é obrigatória.');
-                isValid = false;
+        // Quando a data mudar, busca os horários
+        dataPreferidaInput.addEventListener('change', function() {
+            clearError('horarioPreferido'); // Limpa erros anteriores do campo de horário
+            const dataSelecionada = this.value;
+            if (dataSelecionada) {
+                carregarHorariosDisponiveis(dataSelecionada);
             } else {
-                const hoje = new Date();
-                hoje.setHours(0,0,0,0); 
-                const dataSelecionada = new Date(dataPreferidaInput.value + "T00:00:00"); 
-                if (dataSelecionada < hoje) {
-                    showError('dataPreferida', 'A data não pode ser anterior ao dia de hoje.');
-                    isValid = false;
-                }
+                horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Selecione uma data primeiro...</option>';
             }
-            if (horarioPreferidoInput.value === '') {
-                showError('horarioPreferido', 'Horário preferido é obrigatório.');
-                isValid = false;
-            } else {
-                const [hora, minuto] = horarioPreferidoInput.value.split(':').map(Number);
-                // Verifica se o horário está dentro do permitido (08:00 - 17:30)
-                if (hora < 8 || hora > 17 || (hora === 17 && minuto > 30)) {
-                     showError('horarioPreferido', 'Horário deve ser entre 08:00 e 17:30.');
-                     isValid = false;
-                }
-            }
-
-            if (isValid) {
-                console.log('Solicitação de agendamento válida e pronta para enviar:');
-                const formData = {
-                    // userId: backend pegaria da sessão
-                    userEmail: userEmail, // Enviando email para identificar o usuário
-                    userName: userName,     // Enviando nome
-                    veiculo: veiculoInput.value.trim(),
-                    servico: servicosDesejadosInput.value,
-                    dataPreferida: dataPreferidaInput.value,
-                    horarioPreferido: horarioPreferidoInput.value,
-                    observacoes: observacoesInput.value.trim()
-                };
-                console.log(formData);
-                
-                // SIMULAÇÃO DE SUBMISSÃO E RESPOSTA DO BACKEND
-                // Substitua por sua lógica fetch real
-                showSuccessMessage('Sua solicitação de agendamento foi enviada! Você pode verificar o status na sua página de perfil.');
-                
-                // Adicionar este agendamento mockado ao localStorage para exibir no perfil (APENAS PARA SIMULAÇÃO)
-                const agendamentosMockados = JSON.parse(localStorage.getItem('mockUserAgendamentos')) || [];
-                const novoAgendamento = {
-                    id: 'AG' + Date.now(), // ID único simples
-                    servicoNome: servicosDesejadosInput.options[servicosDesejadosInput.selectedIndex].text,
-                    data: dataPreferidaInput.value,
-                    horario: horarioPreferidoInput.value,
-                    veiculo: veiculoInput.value.trim(),
-                    status: 'Pendente' // Status inicial
-                };
-                agendamentosMockados.push(novoAgendamento);
-                localStorage.setItem('mockUserAgendamentos', JSON.stringify(agendamentosMockados));
-
-                agendamentoForm.reset(); 
-                dataPreferidaInput.min = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`; // Reset min date
-                fieldsToValidate.forEach(id => clearError(id));
-
-            } else {
-                const firstError = document.querySelector('.agendamento-form-wrapper .error-message[style*="display: block"]');
-                if (firstError && firstError.id !== 'generalError') { // Não rolar para o erro geral no topo
-                    firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else if (generalErrorDiv.style.display === 'block') {
-                     generalErrorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
-        
-        const allInputsAndSelects = agendamentoForm.querySelectorAll('input, select, textarea');
-        allInputsAndSelects.forEach(input => {
-            const eventType = (input.tagName === 'SELECT' || input.type === 'date' || input.type === 'time') ? 'change' : 'input';
-            input.addEventListener(eventType, () => {
-                clearError(input.id);
-                clearError('general', true); // Limpa erro geral ao interagir com qualquer campo
-            });
         });
     }
     
+    // ... (Restante do seu código em agendamento.script.js, como a submissão do formulário de agendamento,
+    // tratamento de dados do usuário logado, atualização do ano no rodapé, etc.) ...
+    
+    // Exemplo de como a submissão do formulário de agendamento ficaria (simplificado):
+    if (agendamentoForm) {
+        agendamentoForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            // ... (sua lógica de validação e coleta de dados do formulário) ...
+            let isValid = true; // Sua lógica de validação aqui
+            // Validação do horário selecionado
+             if (horarioPreferidoSelect.value === '') {
+                showError('horarioPreferido', 'Por favor, selecione um horário.');
+                isValid = false;
+            }
+
+            if(isValid) {
+                const formData = {
+                    // ... (todos os dados do formulário, incluindo dataPreferidaInput.value e horarioPreferidoSelect.value) ...
+                    veiculo: document.getElementById('veiculo').value.trim(),
+                    servicoId: document.getElementById('servicosDesejados').value,
+                    dataPreferida: dataPreferidaInput.value,
+                    horarioPreferido: horarioPreferidoSelect.value,
+                    observacoes: document.getElementById('observacoes').value.trim(),
+                    userEmail: localStorage.getItem('userEmailMarquesAutoDetail'),
+                    userName: localStorage.getItem('userNameMarquesAutoDetail')
+                };
+
+                console.log("Dados do agendamento para enviar ao backend:", formData);
+                // Aqui você faria o POST para o seu endpoint de *salvar* o agendamento
+                // Ex: POST http://localhost:8080/agenda/salvar (ou similar)
+                // ... fetch para salvar agendamento ...
+                 try {
+                    const response = await fetch('http://localhost:8080/agenda/salvar', { // <<< AJUSTE ESTE ENDPOINT
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (response.ok) {
+                        showSuccessMessage('Agendamento solicitado com sucesso! Verifique o status no seu perfil.');
+                        // ... (lógica para adicionar ao localStorage para simulação no perfil, como antes) ...
+                        const agendamentosMockados = JSON.parse(localStorage.getItem('mockUserAgendamentos')) || [];
+                        const servicosSelect = document.getElementById('servicosDesejados');
+                        const novoAgendamento = {
+                            id: 'AG' + Date.now(),
+                            servicoNome: servicosSelect.options[servicosSelect.selectedIndex].text,
+                            data: formData.dataPreferida,
+                            horario: formData.horarioPreferido,
+                            veiculo: formData.veiculo,
+                            status: 'Pendente'
+                        };
+                        agendamentosMockados.push(novoAgendamento);
+                        localStorage.setItem('mockUserAgendamentos', JSON.stringify(agendamentosMockados));
+                        
+                        agendamentoForm.reset();
+                        horarioPreferidoSelect.innerHTML = '<option value="" disabled selected>Selecione uma data primeiro...</option>';
+                         const hoje = new Date();
+                         dataPreferidaInput.min = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+
+
+                    } else {
+                        let errorData = { message: response.statusText };
+                        try { errorData = await response.json(); } catch (e) {}
+                        showError('horarioPreferido', `Erro ao agendar: ${errorData.message || response.statusText}`);
+                    }
+                } catch (error) {
+                     showError('horarioPreferido', 'Falha ao conectar com o servidor para agendar.');
+                }
+            }
+        });
+    }
+    
+     // Atualizar ano no rodapé
     const currentYearSpan = document.getElementById('currentYear');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
+
 });
