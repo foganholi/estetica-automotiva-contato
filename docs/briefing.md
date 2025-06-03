@@ -2,7 +2,7 @@ docs/briefing.md
 # Briefing do Projeto - Estética Automotiva Contato
 
 ## 🎯 Pitch
-Plataforma web que permite o contato via WhatsApp entre clientes e uma empresa de estética automotiva, com login e acesso personalizado.
+Plataforma web que permite o contato via WhatsApp entre clientes e a empresa de estética automotiva, com login e acesso personalizado e a parte de agendamento via web 
 
 ---
 
@@ -26,13 +26,16 @@ Aumentar em 30% os contatos automatizados de clientes até junho de 2025, por me
 
 - Plataforma web com:
   - Tela de login com autenticação
+  - cadastro como confirmação
   - Área do cliente
   - Botão direto de contato via WhatsApp
+  - agendamento via web
 
 ### Requisitos de qualidade:
 - Interface responsiva
 - Segurança básica com autenticação
 - Redirecionamento funcional para o WhatsApp com número da estética
+- serviço de agendamento via web 
 
 ---
 
@@ -51,16 +54,16 @@ Aumentar em 30% os contatos automatizados de clientes até junho de 2025, por me
 - Equipe técnica
 
 ### Equipe:
-- Gabriel Foganholi (aluno desenvolvedor)
+- Matheus Foganholi (aluno desenvolvedor)
 - Professores/orientadores da disciplina de Gerenciamento de Projetos (SENAC)
 
 ---
 
 ## 🗓️ Timeline
 
-- 01–03/maio: briefing e organização inicial
-- 04–06/maio: planejamento técnico
-- 07–13/maio: desenvolvimento (frontend + backend)
-- 14–15/maio: testes e ajustes
-- 16–17/maio: finalização e entrega do projeto/documentação
+- 01–03/abril: briefing e organização inicial
+- 05–10/abril: planejamento técnico
+- 11/abril - 15/maio: desenvolvimento (frontend + backend)
+- 15–31/maio: testes e ajustes
+- 01–05/maio: finalização e entrega do projeto/documentação
 
