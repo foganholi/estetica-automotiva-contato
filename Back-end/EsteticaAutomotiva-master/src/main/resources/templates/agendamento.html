@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento - Marques AutoDetail</title>
-    <link rel="stylesheet" href="agendamento.style.css">
+    <link rel="stylesheet" th:href="@{/css/agendamento.style.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
     <header class="page-header">
         <div class="container">
-            <a href="../index.html" class="logo-link-header">
+            <a th:href="@{/}" class="logo-link-header">
                 Marques AutoDetail
             </a>
             <h1>Faça seu Agendamento</h1>
@@ -22,16 +22,17 @@
 
     <main class="agendamento-container">
         <div class="agendamento-form-wrapper">
-            <div id="userInfoForScheduling" class="user-info-scheduling">
-                <p>Agendando como: <strong id="userNameDisplay">Carregando...</strong> (<span id="userEmailDisplay"></span>)</p>
+            <div id="userInfoForScheduling" class="user-info-scheduling" sec:authorize="isAuthenticated()">
+                <p>Agendando como: <strong id="userNameDisplay" th:text="${userNameDisplay}">Carregando...</strong>
+                   (<span id="userEmailDisplay" th:text="${userEmailDisplay}"></span>)
+                </p>
                 <p>Usaremos os dados do seu perfil para este agendamento.</p>
             </div>
             
             <div id="successMessage" class="success-message" style="display: none;"></div>
             <div id="generalError" class="error-message" style="text-align: center; margin-bottom: 15px;"></div>
             
-            <form id="agendamentoForm">
-                <div class="form-group">
+            <form id="agendamentoForm"> <div class="form-group">
                     <label for="veiculo">Veículo (Marca/Modelo/Ano):</label>
                     <input type="text" id="veiculo" name="veiculo" placeholder="Ex: Honda Civic 2020" required>
                     <div class="error-message" id="veiculoError"></div>
@@ -52,25 +53,18 @@
                 </div>
                 
                 <div class="form-row">
-                <div class="form-group">
-                    <label for="dataPreferida">Escolha a Data:</label>
-                    <input type="date" id="dataPreferida" name="dataPreferida" required>
-                    <div class="error-message" id="dataPreferidaError"></div>
-                </div>
-
-                <div class="form-group">
-                    <label for="horarioPreferido">Escolha o Horário:</label>
-                    <select id="horarioPreferido" name="horarioPreferido" required>
-                        <option value="" disabled selected>Selecione uma data primeiro...</option>
-                    </select>
-                        <small class="form-text">Atendimento das 08:00 às 18:00.</small>
-                        <div class="error-message" id="horarioPreferidoError"></div>
+                    <div class="form-group">
+                        <label for="dataPreferida">Escolha a Data:</label>
+                        <input type="date" id="dataPreferida" name="dataPreferida" required>
+                        <div class="error-message" id="dataPreferidaError"></div>
                     </div>
-                </div>
 
                     <div class="form-group">
                         <label for="horarioPreferido">Escolha o Horário:</label>
-                        <input type="time" id="horarioPreferido" name="horarioPreferido" min="08:00" max="17:30" step="1800" required> <small class="form-text">Atendimento das 08:00 às 18:00. Intervalos de 30 minutos.</small>
+                        <select id="horarioPreferido" name="horarioPreferido" required>
+                            <option value="" disabled selected>Selecione uma data primeiro...</option>
+                        </select>
+                        <small class="form-text">Atendimento das 08:00 às 18:00.</small>
                         <div class="error-message" id="horarioPreferidoError"></div>
                     </div>
                 </div>
@@ -86,9 +80,9 @@
     </main>
 
     <footer class="page-footer">
-        <p>&copy; <span id="currentYear"></span> Marques AutoDetail. Todos os direitos reservados. <a href="../index.html">Voltar ao site principal</a></p>
+        <p>&copy; <span id="currentYear" th:text="${#dates.year(#dates.createNow())}"></span> Marques AutoDetail. Todos os direitos reservados. <a th:href="@{/}">Voltar ao site principal</a></p>
     </footer>
 
-    <script src="agendamento.script.js"></script>
+    <script th:src="@{/js/agendamento.script.js}"></script>
 </body>
 </html>

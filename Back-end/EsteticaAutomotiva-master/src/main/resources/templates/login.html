@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Marques AutoDetail</title>
+    <link rel="stylesheet" th:href="@{/css/login.style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-page-container">
+        <div class="login-branding-panel">
+            <div class="branding-content">
+                <div class="logo">
+                    <a th:href="@{/}" class="logo-link"> <img th:src="@{/img/logo2.png}" alt="Logo Marques AutoDetail" class="logo-image">
+                    </a>
+                </div>
+                <p class="branding-text">Bem-vindo de volta! Acesse sua conta para continuar.</p>
+            </div>
+        </div>
+
+        <div class="login-form-panel">
+            <div class="auth-form-wrapper">
+                <h2>Acessar Conta</h2>
+
+                <div th:if="${param.error}" class="error-message" style="display:block; text-align:center; margin-bottom:15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px;">
+                    Falha no login. Verifique suas credenciais ou confirme seu e-mail.
+                </div>
+                <div th:if="${param.logout}" class="success-message" style="display:block; text-align:center; margin-bottom:15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px;">
+                    Você foi desconectado com sucesso. </div>
+                 <div th:if="${param.emailNotConfirmed}" class="error-message" style="display:block; text-align:center; margin-bottom:15px; background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 10px; border-radius: 5px;">
+                    Seu e-mail ainda não foi confirmado. Verifique sua caixa de entrada.
+                </div>
+
+
+                <form id="loginForm" th:action="@{/publico/login}" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email (Login):</label>
+                        <input type="email" id="email" name="login" required>
+                        <div class="error-message" id="emailError"></div> </div>
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <div class="password-input-container">
+                             <input type="password" id="senha" name="senha" required>
+                            <i class="fas fa-eye toggle-password-visibility" data-target="senha"></i>
+                        </div>
+                        <div class="error-message" id="senhaError"></div> </div>
+                    <button type="submit" class="btn-submit-auth">Entrar</button>
+                    <div class="form-link">
+                        <p>Não tem uma conta? <a th:href="@{/register}">Cadastre-se aqui</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="auth-footer">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> Marques AutoDetail. Todos os direitos reservados.</p>
+        <p>
+            <a href="#">Termos de Serviço</a> | <a href="#">Política de Privacidade</a>
+        </p>
+    </footer>
+
+    <script th:src="@{/js/login.script.js}"></script>
+</body>
+</html>

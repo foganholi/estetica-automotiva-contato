@@ -37,8 +37,8 @@ public class PublicoConroller {
     @Transactional
     @PostMapping("/register")
     public ResponseEntity<DataDetalhesCliente> registerCliente(@RequestBody @Valid DataRegistroCliente data,
-																		    UriComponentsBuilder uriBuilder ) {
-    	return clienteService.registroCliente(data, uriBuilder);		
+	UriComponentsBuilder uriBuilder ) {
+    	return clienteService.registroCliente(data, uriBuilder);
     }
 
 }

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marques AutoDetail - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.singlepage.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a th:href="@{/}">Marques AutoDetail</a>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li></li><a th:href="@{/} + '#home'">Home</a><li>
+                    <li><a th:href="@{/} + '#sobre-nos'">Sobre Nós</a></li>
+                    <li><a th:href="@{/} + '#servicos'">Serviços</a></li>
+                    <li><a th:href="@{/} + '#contato'">Contato</a></li>
+
+                    <th:block sec:authorize="isAnonymous()">
+                        <li><a th:href="@{/login}">Login</a></li>
+                        <li><a th:href="@{/register}">Cadastro</a></li>
+                    </th:block>
+
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item-perfil profile-icon-item">
+                            <a th:href="@{/perfil/editar}" class="profile-icon-link" title="Meu Perfil" aria-label="Meu Perfil">
+                                <i class="fas fa-user-circle"></i>
+                                <span class="nav-text-mobile">Perfil</span>
+                            </a>
+                        </li>
+                        </th:block>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section id="home" class="hero-section" th:style="'background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url(' + @{/img/porsche.png} + ') no-repeat center center/cover;'">
+        <div class="hero-content">
+            <h1>Bem-vindo a Marques AutoDetail</h1>
+            <p>Soluções inovadoras para transformar suas ideias em realidade.</p>
+            <a th:href="@{/#servicos}" class="btn btn-primary">Conheça Nossos Serviços</a>
+        </div>
+    </section>
+
+    <section id="sobre-nos" class="section">
+        <div class="container">
+            <div class="section-title-container">
+                <h2>Sobre a Marques AutoDetail</h2>
+                <p class="section-subtitle">Paixão e Precisão em Cada Detalhe</p>
+            </div>
+            <div class="sobre-nos-content">
+                <div class="sobre-nos-image-container">
+                     <img th:src="@{/img/Garage Lounge Area.jpg}" alt="Equipe da Marques AutoDetail ou um carro detalhado com primor">
+                </div>
+                <div class="sobre-nos-text-container">
+                    <h3>Nossa Dedicação ao Seu Veículo</h3>
+                    <p>Na Marques AutoDetail, nossa jornada é movida por uma paixão genuína por automóveis e um compromisso inabalável com a perfeição. Entendemos que seu veículo é mais do que um simples meio de transporte: é um investimento, uma expressão do seu estilo e, muitas vezes, um membro da família. É por isso que dedicamos nossa expertise a realçar sua beleza e proteger seu valor.</p>
+                    <p>Com uma equipe de profissionais altamente qualificados e utilizando apenas produtos de vanguarda e as técnicas mais apuradas do setor de estética automotiva, buscamos a excelência em cada serviço. Desde uma revitalização completa da pintura com nosso polimento técnico especializado, passando pela proteção duradoura da vitrificação, até a meticulosa higienização interna que restaura o conforto e o frescor do seu carro.</p>
+                    <p>Nosso objetivo é superar suas expectativas, entregando resultados que não apenas impressionam visualmente, mas que também contribuem para a longevidade e a valorização do seu automóvel. Convidamos você a experimentar o padrão Marques AutoDetail e redescobrir o prazer de dirigir um veículo impecável.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="section"
+             th:style="'background: linear-gradient(rgba(13, 44, 84, 0.8), rgba(13, 44, 84, 0.8)), url(' + @{/img/Garage Lounge Area.jpg} + ') no-repeat center center/cover; color: var(--cor-texto-claro); height: auto; min-height:100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; padding-bottom: 60px;'">
+        <div class="container">
+            <h2 style="color: var(--cor-texto-claro); font-size: 2.2rem; margin-bottom: 40px;">Nossos Serviços Detalhados</h2>
+            <div class="servicos-detalhados-grid">
+                <div class="servico-detalhado-card">
+                    <div class="servico-detalhado-image" data-tooltip="Higienização completa e detalhada do interior do seu veículo, removendo sujeiras, ácaros e odores, restaurando o frescor e a aparência de novo.">
+                        <img th:src="@{/img/higienizaçao.jpg}" alt="Serviço de Higienização Interna">
+                    </div>
+                    <div class="servico-detalhado-content">
+                        <h3 style="color: var(--cor-primaria);">Higienização Interna</h3>
+                    </div>
+                </div>
+                <div class="servico-detalhado-card">
+                    <div class="servico-detalhado-image" data-tooltip="Aplicação de películas de alta performance para proteção solar, controle de temperatura, privacidade e segurança, com garantia de durabilidade.">
+                        <img th:src="@{/img/pelicula.png}" alt="Aplicação de Películas">
+                    </div>
+                    <div class="servico-detalhado-content">
+                        <h3 style="color: var(--cor-primaria);">Aplicação de Películas</h3>
+                    </div>
+                </div>
+                <div class="servico-detalhado-card">
+                    <div class="servico-detalhado-image" data-tooltip="Processo minucioso de correção da pintura, eliminando imperfeições como riscos, manchas e hologramas, revelando o brilho e a profundidade da cor.">
+                        <img th:src="@{/img/polimento tecnico.png}" alt="Serviço de Polimento Técnico">
+                    </div>
+                    <div class="servico-detalhado-content">
+                        <h3 style="color: var(--cor-primaria);">Polimento Técnico</h3>
+                    </div>
+                </div>
+                <div class="servico-detalhado-card">
+                    <div class="servico-detalhado-image" data-tooltip="Aplicação de revestimento cerâmico (coating) de longa duração que protege a pintura contra raios UV, sujeira, e pequenos arranhões, proporcionando brilho intenso.">
+                        <img th:src="@{/img/vitrificação.png}" alt="Serviço de Vitrificação de Pintura">
+                    </div>
+                    <div class="servico-detalhado-content">
+                        <h3 style="color: var(--cor-primaria);">Vitrificação de Pintura</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="por-que-me-escolher" class="section section-estetica">
+        <div class="container">
+            <h2>Por que me escolher?</h2>
+            <div class="estetica-wrapper">
+                <div class="estetica-info">
+                    <h3>Excelência e Cuidado em Cada Serviço</h3>
+                    <p><i class="fas fa-car"></i> Somos especializados em estética automotiva, oferecendo serviços com foco no cuidado detalhado e no acabamento perfeito para seu carro.</p>
+                </div>
+                <div class="estetica-info">
+                    <h3>Experiência com Diversos Tipos de Veículos</h3>
+                    <p><i class="fas fa-tachometer-alt"></i> Atendemos desde carros populares até veículos de luxo e superesportivos, sempre buscando atender às exigências mais exigentes dos nossos clientes.</p>
+                </div>
+                <div class="estetica-info">
+                    <h3>Serviços Personalizados para Seu Carro</h3>
+                    <p><i class="fas fa-cogs"></i> Oferecemos uma gama de serviços, incluindo polimentos, vitrificação, envelopamento e até restauração de faróis, garantindo um resultado único e exclusivo para cada cliente.</p>
+                </div>
+                <div class="estetica-info">
+                    <h3>Produtos de Alta Qualidade</h3>
+                    <p><i class="fas fa-box"></i> Utilizamos apenas produtos de marcas renomadas e confiáveis no mercado automotivo, com comprovada eficácia e durabilidade para garantir o melhor acabamento possível.</p>
+                </div>
+                <div class="estetica-info">
+                    <h3>Transformação Completa do Seu Veículo</h3>
+                    <p><i class="fas fa-shield-alt"></i> Oferecemos serviços de estética automotiva completos, renovando desde a pintura até o acabamento interno do veículo, proporcionando uma experiência premium.</p>
+                </div>
+                <div class="estetica-info">
+                    <h3>Ambiente Controlado para Resultados Impecáveis</h3>
+                    <p><i class="fas fa-lightbulb"></i> Todos os nossos serviços são realizados em um ambiente com controle de temperatura e iluminação, garantindo a perfeição de cada detalhe no seu carro.</p>
+                </div>
+            </div>
+            <div class="pqme-button-container">
+                <a th:href="@{/agendamento/novo}" class="btn btn-primary">Faça seu Agendamento</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="section section-contato">
+        <div class="container">
+        <h2>Entre em Contato</h2>
+        <div class="contato-wrapper">
+            <div class="contato-info">
+                <h3>Fale Conosco</h3>
+                <p><i class="fas fa-map-marker-alt"></i>Rua Liz das Lagoas, 62</p>
+                <p><i class="fas fa-phone"></i> (11) 94949-6463</p>
+                <p><i class="fas fa-envelope"></i> 1esteticaautomotiva1@gmail.com</p>
+                <p>Siga-nos nas redes sociais:</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="contato-form">
+                <form id="form-contato"> 
+                    <div class="form-group">
+                        <label for="nome-contato">Nome:</label>
+                        <input type="text" id="nome-contato" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email-contato">Email:</label>
+                        <input type="email" id="email-contato" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="assunto-contato">Assunto:</label>
+                        <input type="text" id="assunto-contato" name="assunto" required> </div>
+                    <div class="form-group">
+                        <label for="mensagem-contato">Mensagem:</label>
+                        <textarea id="mensagem-contato" name="mensagem" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> Marques AutoDetail. Todos os direitos reservados.</p>
+            <p>Desenvolvido com <i class="fas fa-heart"></i></p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5511949496463?text=Olá!%20Gostaria%20de%20mais%20informações." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

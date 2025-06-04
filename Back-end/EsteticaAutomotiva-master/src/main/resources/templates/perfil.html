@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - Marques AutoDetail</title>
+    <link rel="stylesheet" th:href="@{/css/perfil.style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="profile-header">
+        <div class="container">
+            <a th:href="@{/}" class="logo-link">MARQUES AUTODETAIL</a> <h1>Meu Perfil</h1>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        <div class="profile-form-wrapper">
+            <form id="editProfileForm">
+                <h2>Informações Pessoais</h2>
+                <div class="form-group">
+                    <label for="nomeCompleto">Nome Completo:</label>
+                    <input type="text" id="nomeCompleto" name="nomeCompleto" th:value="${nomeCompleto}" required>
+                    <div class="error-message" id="nomeCompletoError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" th:value="${email}" required readonly>
+                    <small class="form-text">Para alterar seu email, entre em contato com o suporte.</small>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dataNascimento">Data de Nascimento:</label>
+                    <input type="date" id="dataNascimento" name="dataNascimento" th:value="${dataNascimento ?: '1990-01-01'}" required>
+                    <div class="error-message" id="dataNascimentoError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" th:value="${cpf}" readonly>
+                    <small class="form-text">CPF não pode ser alterado.</small>
+                    <div class="error-message" id="cpfError"></div>
+                </div>
+
+                <hr class="form-divider">
+
+                <h2>Alterar Senha</h2>
+                <small class="form-text">Deixe em branco se não deseja alterar a senha.</small>
+                <div id="successMessagePassword" class="success-message" style="display: none;"></div>
+                <div class="form-group">
+                    <label for="senhaAtual">Senha Atual:</label>
+                    <div class="password-input-container">
+                        <input type="password" id="senhaAtual" name="senhaAtual">
+                        <i class="fas fa-eye toggle-password-visibility" data-target="senhaAtual"></i>
+                    </div>
+                    <div class="error-message" id="senhaAtualError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="novaSenha">Nova Senha (mínimo 6 caracteres):</label>
+                    <div class="password-input-container">
+                        <input type="password" id="novaSenha" name="novaSenha" minlength="6">
+                        <i class="fas fa-eye toggle-password-visibility" data-target="novaSenha"></i>
+                    </div>
+                    <div class="error-message" id="novaSenhaError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarNovaSenha">Confirmar Nova Senha:</label>
+                    <div class="password-input-container">
+                        <input type="password" id="confirmarNovaSenha" name="confirmarNovaSenha" minlength="6">
+                        <i class="fas fa-eye toggle-password-visibility" data-target="confirmarNovaSenha"></i>
+                    </div>
+                    <div class="error-message" id="confirmarNovaSenhaError"></div>
+                </div>
+
+                <div id="successMessage" class="success-message" style="display:none;"></div>
+                <button type="submit" class="btn-submit-profile">Salvar Alterações</button>
+            </form>
+        </div>
+    </main>
+
+    <section class="meus-agendamentos-section">
+        <div class="container">
+            <h2>Meus Agendamentos</h2>
+            <div id="meusAgendamentosList" class="agendamentos-list">
+                <p id="agendamentosLoadingMsg" th:if="${agendamentosLoadingMsg}">Carregando seus agendamentos...</p>
+                <p class="nenhum-agendamento" th:if="${meusAgendamentos == null || meusAgendamentos.empty && !agendamentosLoadingMsg}">
+                    Você ainda não possui agendamentos.
+                </p>
+                
+                <th:block th:each="ag : ${meusAgendamentos}">
+                    <div class="agendamento-item">
+                        <h3 th:text="${'Agendamento ID: ' + ag.id()}">Serviço Agendado</h3>
+                        <p>
+                            <strong>Data:</strong>
+                            <span th:text="${#temporals.format(ag.data(), 'dd/MM/yyyy')}"></span>
+                            (<span th:text="${#temporals.dayOfWeekName(ag.data())?.substring(0,1)?.toUpperCase() + #temporals.dayOfWeekName(ag.data())?.substring(1)?.toLowerCase()}"></span>)
+                        </p>
+                        <p><strong>Horário:</strong> <span th:text="${#temporals.format(ag.data(), 'HH:mm')}"></span></p>
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="agendamento-status"
+                                  th:classappend="${ag.statusAgendamento().toString() == 'MARCADO' ? 'status-confirmado' : 
+                                                   (ag.statusAgendamento().toString() == 'CANCELADO' ? 'status-cancelado' : 
+                                                   (ag.statusAgendamento().toString() == 'FINALIZADO' ? 'status-concluido' : 'status-desconhecido'))}"
+                                  th:text="${ag.statusAgendamento().toString().toLowerCase().replace('_', ' ')}">
+                                Status
+                            </span>
+                        </p>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </section>
+
+    <footer class="profile-footer">
+        <p>&copy; <span id="currentYearFooter" th:text="${#dates.year(#dates.createNow())}"></span> Marques AutoDetail. Todos os direitos reservados. <a th:href="@{/}">Voltar ao site</a></p>
+    </footer>
+
+    <script th:src="@{/js/perfil.script.js}"></script>
+</body>
+</html>

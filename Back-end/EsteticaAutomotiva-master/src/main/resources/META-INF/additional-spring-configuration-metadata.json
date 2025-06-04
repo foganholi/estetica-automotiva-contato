@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "frontend.url",
+    "type": "java.lang.String",
+    "description": "A description for 'frontend.url'"
+  },
+  {
+    "name": "app.verify.url",
+    "type": "java.lang.String",
+    "description": "A description for 'app.verify.url'"
+  },
+  {
+    "name": "secret",
+    "type": "java.lang.String",
+    "description": "A description for 'secret'"
+  },
+  {
+    "name": "front.trocarSenhaURL",
+    "type": "java.lang.String",
+    "description": "A description for 'front.trocarSenhaURL'"
+  }
+]}
